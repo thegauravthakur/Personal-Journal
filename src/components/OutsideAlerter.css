@@ -1,0 +1,32 @@
+.root {
+    width: 100%;
+}
+@media (min-width: 640px) {
+    .root {
+        padding-left: 0;
+        padding-right: 0;
+        max-width: 24rem;
+    }
+}
+
+.body {
+    width: 100%;
+    max-height: 11rem;
+    resize: none;
+    border:none;
+    font-size: 14px;
+}
+
+.body:focus {
+    outline: none;
+}
+
+.title {
+    width: 100%;
+    border:none;
+    font-size: 16px;
+}
+
+.title:focus {
+    outline: none;
+}
