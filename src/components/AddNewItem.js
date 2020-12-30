@@ -9,6 +9,7 @@ import TimelineItem from "@material-ui/lab/TimelineItem";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
 import CustomInputField from "./CustomInputField";
+import OutsideAlerter from "./OutsideAlerter";
 
 const AddNewItem = ({ list, setList }) => {
   const [title, setTitle] = useState("");
@@ -22,38 +23,60 @@ const AddNewItem = ({ list, setList }) => {
     if (body.length > 0 || title.length > 0) {
       const temp = [...list];
       temp.unshift({ title, body, writtenAt: Date.now().toString() });
+      setTitle("");
+      setBody("");
+      setShow(false);
       await app
         .firestore()
         .collection(currentUser.uid)
         .doc(`${day}:${month}:${year}`)
         .set({ data: temp }, { merge: true })
         .then(() => setList(temp));
-      setTitle("");
-      setBody("");
     }
   };
+  const [show, setShow] = React.useState(false);
   return (
-    <TimelineItem>
-      <TimelineSeparator>
-        <TimelineDot
-          style={{
-            WebkitTapHighlightColor: "rgba(255, 255, 255, 0)",
-            backgroundColor: "#F3F4F6",
-            cursor: "pointer",
-            padding: 0,
-            border: 0,
-          }}
-        >
-          <IconButton onClick={onClickHandler} size="small">
-            <AiOutlinePlus style={{ padding: 5 }} color={"#6C7385"} />
-          </IconButton>
-        </TimelineDot>
-        {list.length > 0 ? <TimelineConnector /> : null}
-      </TimelineSeparator>
-      <TimelineContent>
-        <CustomInputField list={list} setList={setList} />
-      </TimelineContent>
-    </TimelineItem>
+    <OutsideAlerter
+      setTitle={setTitle}
+      setBody={setBody}
+      title={title}
+      body={body}
+      setShow={setShow}
+      className="root"
+      list={list}
+      setList={setList}
+    >
+      <TimelineItem>
+        <TimelineSeparator>
+          <TimelineDot
+            style={{
+              WebkitTapHighlightColor: "rgba(255, 255, 255, 0)",
+              backgroundColor: "#F3F4F6",
+              cursor: "pointer",
+              padding: 0,
+              border: 0,
+            }}
+          >
+            <IconButton onClick={onClickHandler} size="small">
+              <AiOutlinePlus style={{ padding: 5 }} color={"#6C7385"} />
+            </IconButton>
+          </TimelineDot>
+          {list.length > 0 ? <TimelineConnector /> : null}
+        </TimelineSeparator>
+        <TimelineContent>
+          <CustomInputField
+            list={list}
+            setList={setList}
+            show={show}
+            setShow={setShow}
+            body={body}
+            setBody={setBody}
+            title={title}
+            setTitle={setTitle}
+          />
+        </TimelineContent>
+      </TimelineItem>
+    </OutsideAlerter>
   );
 };
 
