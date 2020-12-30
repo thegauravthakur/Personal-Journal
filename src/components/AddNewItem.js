@@ -10,6 +10,7 @@ import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
 import CustomInputField from "./CustomInputField";
 import OutsideAlerter from "./OutsideAlerter";
+import { v4 as uuidv4 } from "uuid";
 
 const AddNewItem = ({ list, setList }) => {
   const [title, setTitle] = useState("");
@@ -22,7 +23,12 @@ const AddNewItem = ({ list, setList }) => {
   const onClickHandler = async () => {
     if (body.length > 0 || title.length > 0) {
       const temp = [...list];
-      temp.unshift({ title, body, writtenAt: Date.now().toString() });
+      temp.unshift({
+        title,
+        body,
+        writtenAt: Date.now().toString(),
+        id: uuidv4(),
+      });
       setTitle("");
       setBody("");
       setShow(false);
@@ -63,7 +69,7 @@ const AddNewItem = ({ list, setList }) => {
           </TimelineDot>
           {list.length > 0 ? <TimelineConnector /> : null}
         </TimelineSeparator>
-        <TimelineContent>
+        <TimelineContent style={{ marginBottom: 30 }}>
           <CustomInputField
             list={list}
             setList={setList}

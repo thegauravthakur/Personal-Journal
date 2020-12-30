@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef } from "react";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
+import { v4 as uuidv4 } from "uuid";
 
 /**
  * Hook that alerts clicks outside of the passed ref
@@ -27,7 +28,12 @@ function useOutsideAlerter(
         setShow(false);
         if (title !== "" || body !== "") {
           const temp = [...list];
-          temp.unshift({ title, body, writtenAt: Date.now().toString() });
+          temp.unshift({
+            title,
+            body,
+            writtenAt: Date.now().toString(),
+            id: uuidv4(),
+          });
           setTitle("");
           setBody("");
           await app

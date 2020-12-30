@@ -102,7 +102,7 @@ const TimelineToday = () => {
                 list.map((item, index) => (
                   <CustomTimelineItem
                     index={index}
-                    key={index}
+                    key={item.id}
                     item={item}
                     list={list}
                     setList={setList}
