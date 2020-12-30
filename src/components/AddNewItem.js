@@ -1,14 +1,15 @@
 import React, { useContext, useState } from "react";
 import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
 import TimelineDot from "@material-ui/lab/TimelineDot";
-import { AiOutlinePlus, AiOutlinePlusCircle } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
 import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
-import { IconButton, makeStyles, TextField } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import TimelineItem from "@material-ui/lab/TimelineItem";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
 import CustomInputField from "./CustomInputField";
+
 const AddNewItem = ({ list, setList }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -24,7 +25,7 @@ const AddNewItem = ({ list, setList }) => {
       await app
         .firestore()
         .collection(currentUser.uid)
-        .doc(day.toString() + month.toString() + year.toString())
+        .doc(`${day}:${month}:${year}`)
         .set({ data: temp }, { merge: true })
         .then(() => setList(temp));
       setTitle("");

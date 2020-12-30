@@ -33,7 +33,7 @@ function useOutsideAlerter(
           await app
             .firestore()
             .collection(currentUser.uid)
-            .doc(day.toString() + month.toString() + year.toString())
+            .doc(`${day}:${month}:${year}`)
             .set({ data: temp }, { merge: true })
             .then(() => setList(temp));
         }

@@ -16,6 +16,7 @@ const UpdateInputField = ({
   body,
   setTitle,
   setBody,
+  activeDate,
 }) => {
   const { currentUser } = useContext(AuthContext);
   const dateObj = new Date();
@@ -28,11 +29,21 @@ const UpdateInputField = ({
     temp.splice(index, 1);
     setList(temp);
     setShow(false);
-    await app
-      .firestore()
-      .collection(currentUser.uid)
-      .doc(day.toString() + month.toString() + year.toString())
-      .set({ data: temp }, { merge: true });
+    if (temp.length > 0) {
+      console.log("greater");
+      await app
+        .firestore()
+        .collection(currentUser.uid)
+        .doc(activeDate)
+        .set({ data: temp }, { merge: true });
+    } else {
+      console.log("else part");
+      await app
+        .firestore()
+        .collection(currentUser.uid)
+        .doc(activeDate)
+        .delete();
+    }
   };
   return (
     <div

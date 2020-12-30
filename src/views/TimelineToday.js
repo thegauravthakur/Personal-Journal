@@ -1,40 +1,76 @@
 import React, { useContext, useEffect, useState } from "react";
 import Timeline from "@material-ui/lab/Timeline";
-import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
+import {
+  CircularProgress,
+  Grid,
+  makeStyles,
+  Paper,
+  Typography,
+} from "@material-ui/core";
 import CustomAppbar from "../components/CustomAppbar";
-import CustomTimelineItem from "../components/CustomTimelineItem";
-import AddNewItem from "../components/AddNewItem";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
-import { formattedDate } from "../utils/helperFunctions";
+import { formattedDate, isDaySame } from "../utils/helperFunctions";
+import { Calendar } from "react-modern-calendar-datepicker";
+import "../styles/calendar.css";
+import AddNewItem from "../components/AddNewItem";
+import CustomTimelineItem from "../components/CustomTimelineItem";
 
 const TimelineToday = () => {
   const [list, setList] = useState([]);
   const { currentUser } = useContext(AuthContext);
+  const [loading1, setLoading1] = useState(false);
+  const [loading2, setLoading2] = useState(false);
   const dateObj = new Date();
   const month = dateObj.getUTCMonth() + 1; //months from 1-12
   const day = dateObj.getUTCDate();
   const year = dateObj.getUTCFullYear();
+  const [activeDate, setActiveDate] = useState(`${day}:${month}:${year}`);
+  const [selectedDay, setSelectedDay] = useState({
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    day: new Date().getDate(),
+  });
   const classes = useStyle();
   useEffect(() => {
-    const ref = app
-      .firestore()
-      .collection(currentUser.uid)
-      .doc(day.toString() + month.toString() + year.toString());
+    setLoading1(true);
+    const ref = app.firestore().collection(currentUser.uid).doc(activeDate);
     ref.onSnapshot((s) => {
       if (!s.exists) {
-        // ref.set({ data: [] }, { merge: true }).then();
+        setLoading1(false);
+        setList([]);
       } else {
+        setLoading1(false);
         setList(s.data().data);
       }
     });
-  }, []);
+  }, [activeDate]);
+  const [datesId, setDatesId] = useState([]);
+  useEffect(() => {
+    setLoading2(true);
+    const ref = app.firestore().collection(currentUser.uid).get();
+    ref.then((data) => {
+      const temp = [];
+      data.docs.forEach((d) => {
+        const fullDate = d["id"].split(":");
+        temp.push({
+          day: parseInt(fullDate[0]),
+          month: parseInt(fullDate[1]),
+          year: parseInt(fullDate[2]),
+          className: "custom-tile",
+        });
+        console.log(temp);
+      });
+      setLoading2(false);
+      setDatesId(temp);
+    });
+  }, [list]);
+
   return (
     <Paper className={classes.root}>
       <CustomAppbar />
-      <Grid container>
-        <Grid item sm={3} md={4} />
-        <Grid item sm={6} md={4} container direction="column">
+      <Grid container justify="space-evenly">
+        <Grid xs={11} sm={8} md={6} lg={4} item container direction="column">
           <Grid item>
             <Typography
               variant="h4"
@@ -42,33 +78,59 @@ const TimelineToday = () => {
                 fontWeight: "bolder",
                 color: "#334155",
                 marginTop: 30,
-                marginLeft: 13,
                 marginBottom: 20,
               }}
             >
-              {formattedDate()}
+              {formattedDate(
+                new Date(selectedDay.year, selectedDay.month, selectedDay.day)
+              )}
             </Typography>
           </Grid>
           <Grid item>
-            <Timeline
-              align="left"
-              style={{ padding: 0, margin: "0 13px 0 13px" }}
-            >
-              <AddNewItem list={list} setList={setList} />
-              {list.map((item, index) => (
-                <CustomTimelineItem
-                  index={index}
-                  key={index}
-                  item={item}
-                  list={list}
-                  setList={setList}
-                  isLast={index === list.length - 1}
-                />
-              ))}
+            <Timeline align="left" style={{ padding: 0, margin: 0 }}>
+              {isDaySame(
+                new Date(),
+                new Date(
+                  selectedDay.year,
+                  selectedDay.month - 1,
+                  selectedDay.day
+                )
+              ) ? (
+                <AddNewItem list={list} setList={setList} />
+              ) : null}
+              {!loading1 ? (
+                list.map((item, index) => (
+                  <CustomTimelineItem
+                    index={index}
+                    key={index}
+                    item={item}
+                    list={list}
+                    setList={setList}
+                    activeDate={activeDate}
+                    isLast={index === list.length - 1}
+                  />
+                ))
+              ) : (
+                <CircularProgress />
+              )}
+              {list.length === 0 && !loading1 ? (
+                <Typography variant={"h6"}>Empty Here!</Typography>
+              ) : null}
             </Timeline>
           </Grid>
         </Grid>
-        <Grid item sm={3} md={4} />
+        <Grid item style={{ marginTop: 35 }}>
+          <Calendar
+            customDaysClassName={datesId}
+            value={selectedDay}
+            onChange={(e) => {
+              console.log(e);
+              setActiveDate(`${e.day}:${e.month}:${e.year}`);
+              setSelectedDay(e);
+            }}
+            shouldHighlightWeekends
+          />
+        </Grid>
       </Grid>
     </Paper>
   );

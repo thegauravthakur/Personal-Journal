@@ -12,8 +12,16 @@ import UpdateInputField from "./UpdateInputField";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
 import OutsideAlerterUpdate from "./OutsideAlerterUpdate";
+import { formatAMPM, isDaySame } from "../utils/helperFunctions";
 
-const CustomTimelineItem = ({ isLast, item, index, list, setList }) => {
+const CustomTimelineItem = ({
+  isLast,
+  item,
+  index,
+  list,
+  setList,
+  activeDate,
+}) => {
   const { title, body, writtenAt } = item;
   const [show, setShow] = useState(false);
   const { currentUser } = useContext(AuthContext);
@@ -37,7 +45,7 @@ const CustomTimelineItem = ({ isLast, item, index, list, setList }) => {
         await app
           .firestore()
           .collection(currentUser.uid)
-          .doc(day.toString() + month.toString() + year.toString())
+          .doc(activeDate)
           .set({ data: temp }, { merge: true });
       }
     }
@@ -85,6 +93,7 @@ const CustomTimelineItem = ({ isLast, item, index, list, setList }) => {
         {show ? (
           <TimelineContent>
             <UpdateInputField
+              activeDate={activeDate}
               show={show}
               setShow={setShow}
               index={index}
@@ -102,7 +111,11 @@ const CustomTimelineItem = ({ isLast, item, index, list, setList }) => {
               {title}
             </Typography>
             <Typography style={{ marginBottom: 10 }}>{body}</Typography>
-            <TimeAgo datetime={parseInt(writtenAt)} />
+            {isDaySame(new Date(), new Date(parseInt(writtenAt))) ? (
+              <TimeAgo datetime={parseInt(writtenAt)} />
+            ) : (
+              formatAMPM(new Date(parseInt(writtenAt)))
+            )}
           </TimelineContent>
         )}
       </TimelineItem>
