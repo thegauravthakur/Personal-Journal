@@ -33,8 +33,9 @@ function english_ordinal_suffix(dt) {
 export const formattedDate = (d) => {
   console.log(d);
   const day = english_ordinal_suffix(d);
+  const year = d.getFullYear();
   const month = getCurrentMonth();
-  return month.toString() + " " + day.toString();
+  return month.toString() + " " + day.toString() + ", " + (year - 1).toString();
 };
 
 export const formatAMPM = (date) => {

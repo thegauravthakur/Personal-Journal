@@ -59,7 +59,7 @@ const UpdateInputField = ({
           defaultValue={list[index].title}
           onChange={(e) => setTitle(e.target.value)}
           className={"title"}
-          placeholder="title"
+          placeholder="Title"
         />
         <TextareaAutosize
           defaultValue={list[index].body}

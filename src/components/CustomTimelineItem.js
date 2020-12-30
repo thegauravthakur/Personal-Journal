@@ -107,10 +107,20 @@ const CustomTimelineItem = ({
           </TimelineContent>
         ) : (
           <TimelineContent style={{ marginBottom: 30 }}>
-            <Typography style={{ fontWeight: "bolder", fontSize: 19 }}>
+            <Typography
+              style={{
+                fontWeight: "bolder",
+                fontSize: 19,
+                fontFamily: '"Segoe UI", serif',
+              }}
+            >
               {title}
             </Typography>
-            <Typography style={{ marginBottom: 10 }}>{body}</Typography>
+            <Typography
+              style={{ marginBottom: 10, fontFamily: '"Segoe UI", serif' }}
+            >
+              {body}
+            </Typography>
             {isDaySame(new Date(), new Date(parseInt(writtenAt))) ? (
               <TimeAgo datetime={parseInt(writtenAt)} />
             ) : (

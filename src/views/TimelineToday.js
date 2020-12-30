@@ -26,11 +26,12 @@ const TimelineToday = () => {
   const day = dateObj.getUTCDate();
   const year = dateObj.getUTCFullYear();
   const [activeDate, setActiveDate] = useState(`${day}:${month}:${year}`);
-  const [selectedDay, setSelectedDay] = useState({
+  const defaultValue = {
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
     day: new Date().getDate(),
-  });
+  };
+  const [selectedDay, setSelectedDay] = useState(defaultValue);
   const classes = useStyle();
   useEffect(() => {
     setLoading1(true);
@@ -79,6 +80,7 @@ const TimelineToday = () => {
                 color: "#334155",
                 marginTop: 30,
                 marginBottom: 20,
+                fontFamily: '"Segoe UI", serif',
               }}
             >
               {formattedDate(
@@ -120,16 +122,18 @@ const TimelineToday = () => {
           </Grid>
         </Grid>
         <Grid item style={{ marginTop: 35 }}>
-          <Calendar
-            customDaysClassName={datesId}
-            value={selectedDay}
-            onChange={(e) => {
-              console.log(e);
-              setActiveDate(`${e.day}:${e.month}:${e.year}`);
-              setSelectedDay(e);
-            }}
-            shouldHighlightWeekends
-          />
+          <div>
+            <Calendar
+              customDaysClassName={datesId}
+              value={selectedDay}
+              onChange={(e) => {
+                console.log(e);
+                setActiveDate(`${e.day}:${e.month}:${e.year}`);
+                setSelectedDay(e);
+              }}
+              shouldHighlightWeekends
+            />
+          </div>
         </Grid>
       </Grid>
     </Paper>

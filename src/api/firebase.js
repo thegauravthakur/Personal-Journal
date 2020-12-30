@@ -1,7 +1,7 @@
-import * as firebase from 'firebase/app';
-import 'firebase/firestore'
-import 'firebase/auth'
-import 'firebase/database'
+import * as firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
+import "firebase/database";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -12,5 +12,8 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
-const app = firebase.default.initializeApp(firebaseConfig)
+const app = firebase.default.initializeApp(firebaseConfig);
+const provider = new firebase.default.auth.GoogleAuthProvider();
+provider.setCustomParameters({ prompt: "select_account" });
+export const signInWithGoogle = () => app.auth().signInWithPopup(provider);
 export default app;

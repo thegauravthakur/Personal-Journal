@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import app from "../api/firebase";
+import { LinearProgress } from "@material-ui/core";
 
 export const AuthContext = React.createContext("");
 export const AuthProvider = ({ children }) => {
@@ -12,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     });
   }, []);
   if (pending) {
-    return <p>Loading</p>;
+    return <LinearProgress />;
   }
   return (
     <AuthContext.Provider
