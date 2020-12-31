@@ -6,12 +6,13 @@ import {
   makeStyles,
   Toolbar,
   Typography,
-  useMediaQuery,
 } from "@material-ui/core";
 import app from "../api/firebase";
-import { GiHamburgerMenu } from "react-icons/gi";
+import { BiArrowBack } from "react-icons/bi";
+import { useHistory } from "react-router-dom";
 
-const CustomAppbar = ({ setDrawer }) => {
+const CustomAppbar = ({ title }) => {
+  const history = useHistory();
   const useStyles = makeStyles({
     btn: {
       color: "white",
@@ -22,22 +23,20 @@ const CustomAppbar = ({ setDrawer }) => {
     },
   });
   const classes = useStyles();
-  const matches = useMediaQuery("(min-width:600px)");
   return (
     <AppBar style={{ backgroundColor: "#f5f4f4" }} position="relative">
       <Toolbar>
         <IconButton
-          size={!matches ? "small" : "medium"}
-          onClick={() => setDrawer(true)}
+          onClick={() => history.push("/")}
           style={{ marginRight: 10 }}
         >
-          <GiHamburgerMenu />
+          <BiArrowBack />
         </IconButton>
         <Typography variant={"h6"} className={classes.brand}>
-          Personal Journal
+          {title}
         </Typography>
         <Button
-          variant={"outlined"}
+          variant="outlined"
           onClick={async () => await app.auth().signOut()}
         >
           Logout

@@ -25,10 +25,6 @@ const CustomTimelineItem = ({
   const { title, body, writtenAt } = item;
   const [show, setShow] = useState(false);
   const { currentUser } = useContext(AuthContext);
-  const dateObj = new Date();
-  const month = dateObj.getUTCMonth() + 1; //months from 1-12
-  const day = dateObj.getUTCDate();
-  const year = dateObj.getUTCFullYear();
 
   const [updateTitle, setUpdateTitle] = useState(list[index].title);
   const [updateBody, setUpdateBody] = useState(list[index].body);

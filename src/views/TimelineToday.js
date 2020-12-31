@@ -15,12 +15,13 @@ import { Calendar } from "react-modern-calendar-datepicker";
 import "../styles/calendar.css";
 import AddNewItem from "../components/AddNewItem";
 import CustomTimelineItem from "../components/CustomTimelineItem";
+import CustomDrawer from "../components/CustomDrawer";
 
 const TimelineToday = () => {
   const [list, setList] = useState([]);
   const { currentUser } = useContext(AuthContext);
   const [loading1, setLoading1] = useState(false);
-  const [loading2, setLoading2] = useState(false);
+  const [drawer, setDrawer] = useState(false);
   const dateObj = new Date();
   const month = dateObj.getUTCMonth() + 1; //months from 1-12
   const day = dateObj.getUTCDate();
@@ -48,7 +49,6 @@ const TimelineToday = () => {
   }, [activeDate]);
   const [datesId, setDatesId] = useState([]);
   useEffect(() => {
-    setLoading2(true);
     const ref = app.firestore().collection(currentUser.uid).get();
     ref.then((data) => {
       const temp = [];
@@ -61,14 +61,13 @@ const TimelineToday = () => {
           className: "custom-tile",
         });
       });
-      setLoading2(false);
       setDatesId(temp);
     });
   }, [list]);
 
   return (
     <Paper className={classes.root}>
-      <CustomAppbar />
+      <CustomAppbar setDrawer={setDrawer} />
       <Grid container justify="space-evenly">
         <Grid xs={11} sm={8} md={6} lg={4} item container direction="column">
           <Grid item>
@@ -134,6 +133,7 @@ const TimelineToday = () => {
           </div>
         </Grid>
       </Grid>
+      <CustomDrawer drawer={drawer} setDrawer={setDrawer} />
     </Paper>
   );
 };

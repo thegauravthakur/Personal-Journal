@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import "./OutsideAlerter.css";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 const CustomInputField = ({
-  list,
-  setList,
   show,
   setShow,
   body,

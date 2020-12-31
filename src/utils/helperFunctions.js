@@ -71,3 +71,9 @@ export const check = (list, date) => {
   }
   return false;
 };
+
+export const getHostName = (url) => {
+  const parser = document.createElement("a");
+  parser.href = url;
+  return parser.hostname;
+};

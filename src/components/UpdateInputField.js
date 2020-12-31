@@ -11,18 +11,11 @@ const UpdateInputField = ({
   setList,
   index,
   setShow,
-  show,
-  title,
-  body,
   setTitle,
   setBody,
   activeDate,
 }) => {
   const { currentUser } = useContext(AuthContext);
-  const dateObj = new Date();
-  const month = dateObj.getUTCMonth() + 1; //months from 1-12
-  const day = dateObj.getUTCDate();
-  const year = dateObj.getUTCFullYear();
 
   const onDeleteHandler = async () => {
     const temp = [...list];

@@ -1,0 +1,7 @@
+.parent {
+    min-height: -webkit-fill-available;
+}
+
+.child {
+    height: -webkit-fill-available;
+}

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef } from "react";
 import app from "../api/firebase";
-import { AuthContext } from "../context/Provider";
 
 /**
  * Hook that alerts clicks outside of the passed ref
@@ -16,8 +15,6 @@ function useOutsideAlerter(
   show,
   setShow
 ) {
-  const { currentUser } = useContext(AuthContext);
-
   useEffect(() => {
     async function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {

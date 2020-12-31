@@ -36,7 +36,9 @@ const Backup = () => {
 
   return (
     <div>
-      <Button onClick={downloadTxtFile}>Backup</Button>
+      <Button variant="outlined" onClick={downloadTxtFile}>
+        Download
+      </Button>
     </div>
   );
 };

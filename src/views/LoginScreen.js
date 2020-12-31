@@ -1,17 +1,19 @@
-import React, { useContext } from "react";
-import app, { signInWithGoogle } from "../api/firebase";
+import React, { useContext, useState } from "react";
+import { signInWithGoogle } from "../api/firebase";
 import { AuthContext } from "../context/Provider";
 import { Redirect } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import { Button, Typography } from "@material-ui/core";
+import { Button, LinearProgress, Typography } from "@material-ui/core";
 
 const LoginScreen = () => {
   const { currentUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   if (currentUser) return <Redirect to={"/"} />;
   return (
     <div
       style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}
     >
+      {loading ? <LinearProgress /> : null}
       <div
         style={{
           display: "flex",
@@ -34,19 +36,16 @@ const LoginScreen = () => {
           >
             Just a minute away from experiencing clean UI experience
           </Typography>
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            <Button onClick={() => app.auth().signInAnonymously()}>
-              Anonymous Login
-            </Button>
-            <Button
-              onClick={signInWithGoogle}
-              variant="outlined"
-              className={""}
-              startIcon={<FcGoogle />}
-            >
-              Login with Google
-            </Button>
-          </div>
+
+          <Button
+            fullWidth
+            onClick={() => signInWithGoogle(setLoading)}
+            variant="outlined"
+            className={""}
+            startIcon={<FcGoogle />}
+          >
+            Login with Google
+          </Button>
         </div>
       </div>
     </div>

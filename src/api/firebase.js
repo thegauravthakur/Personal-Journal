@@ -1,7 +1,7 @@
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import "firebase/database";
+import "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -15,6 +15,24 @@ const firebaseConfig = {
 const app = firebase.default.initializeApp(firebaseConfig);
 const GoogleProvider = new firebase.default.auth.GoogleAuthProvider();
 GoogleProvider.setCustomParameters({ prompt: "select_account" });
-export const signInWithGoogle = () =>
-  app.auth().signInWithPopup(GoogleProvider);
+export const signInWithGoogle = (setLoading) => {
+  setLoading(true);
+  app
+    .auth()
+    .signInWithPopup(GoogleProvider)
+    .then(() => {
+      app
+        .auth()
+        .getRedirectResult()
+        .then((result) => {
+          if (result.credential) {
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          setLoading(false);
+        });
+    })
+    .catch((e) => setLoading(false));
+};
 export default app;
