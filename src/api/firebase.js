@@ -13,7 +13,8 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 const app = firebase.default.initializeApp(firebaseConfig);
-const provider = new firebase.default.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: "select_account" });
-export const signInWithGoogle = () => app.auth().signInWithPopup(provider);
+const GoogleProvider = new firebase.default.auth.GoogleAuthProvider();
+GoogleProvider.setCustomParameters({ prompt: "select_account" });
+export const signInWithGoogle = () =>
+  app.auth().signInWithPopup(GoogleProvider);
 export default app;
