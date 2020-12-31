@@ -5,6 +5,7 @@ import { AuthProvider } from "./context/Provider";
 import { BrowserRouter } from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core";
 import theme from "./config/theme";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -16,3 +17,4 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById("root")
 );
+serviceWorkerRegistration.register();

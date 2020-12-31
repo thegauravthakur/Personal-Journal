@@ -21,7 +21,7 @@ const SettingsPage = () => {
   const matches740 = useMediaQuery("(min-width:740px)");
   return (
     <div>
-      <SettingAppbar titile={"Settings"} />
+      <SettingAppbar title={"Settings"} />
       <Container maxWidth={"md"}>
         <List>
           {matches740 ? (
