@@ -60,7 +60,6 @@ const TimelineToday = () => {
           year: parseInt(fullDate[2]),
           className: "custom-tile",
         });
-        console.log(temp);
       });
       setLoading2(false);
       setDatesId(temp);
@@ -127,7 +126,6 @@ const TimelineToday = () => {
               customDaysClassName={datesId}
               value={selectedDay}
               onChange={(e) => {
-                console.log(e);
                 setActiveDate(`${e.day}:${e.month}:${e.year}`);
                 setSelectedDay(e);
               }}

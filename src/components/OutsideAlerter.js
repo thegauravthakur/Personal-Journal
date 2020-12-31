@@ -24,7 +24,6 @@ function useOutsideAlerter(
   useEffect(() => {
     async function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
-        console.log("outsize");
         setShow(false);
         if (title !== "" || body !== "") {
           const temp = [...list];

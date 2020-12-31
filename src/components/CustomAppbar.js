@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import app from "../api/firebase";
+import Backup from "./Backup";
 
 const CustomAppbar = () => {
   const useStyles = makeStyles({
@@ -25,6 +26,7 @@ const CustomAppbar = () => {
         <Typography variant={"h6"} className={classes.brand}>
           Personal Journal
         </Typography>
+        <Backup />
         <Button onClick={async () => await app.auth().signOut()}>Logout</Button>
       </Toolbar>
     </AppBar>

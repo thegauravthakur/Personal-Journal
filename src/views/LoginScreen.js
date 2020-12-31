@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import app, { signInWithGoogle } from "../api/firebase";
 import { AuthContext } from "../context/Provider";
 import { Redirect } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import { Button, Paper, Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 
 const LoginScreen = () => {
   const { currentUser } = useContext(AuthContext);

@@ -30,14 +30,12 @@ const UpdateInputField = ({
     setList(temp);
     setShow(false);
     if (temp.length > 0) {
-      console.log("greater");
       await app
         .firestore()
         .collection(currentUser.uid)
         .doc(activeDate)
         .set({ data: temp }, { merge: true });
     } else {
-      console.log("else part");
       await app
         .firestore()
         .collection(currentUser.uid)

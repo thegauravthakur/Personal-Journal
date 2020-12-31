@@ -31,7 +31,6 @@ function english_ordinal_suffix(dt) {
 }
 
 export const formattedDate = (d) => {
-  console.log(d);
   const day = english_ordinal_suffix(d);
   const year = d.getFullYear();
   const month = getCurrentMonth();
@@ -39,7 +38,6 @@ export const formattedDate = (d) => {
 };
 
 export const formatAMPM = (date) => {
-  console.log({ date });
   let hours = date.getHours();
   let minutes = date.getMinutes();
   let ampm = hours >= 12 ? "pm" : "am";
