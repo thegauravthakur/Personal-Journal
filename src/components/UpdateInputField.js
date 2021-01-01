@@ -19,10 +19,12 @@ const UpdateInputField = ({
 
   const onDeleteHandler = async () => {
     const temp = [...list];
+    const data = temp[index];
     temp.splice(index, 1);
     setList(temp);
     setShow(false);
     if (temp.length > 0) {
+      await app.storage().ref(`/${currentUser.uid}/${data.id}`).delete();
       await app
         .firestore()
         .collection(currentUser.uid)

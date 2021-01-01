@@ -14,7 +14,8 @@ function useOutsideAlerter(
   setTitle,
   setBody,
   list,
-  setList
+  setList,
+  setFile
 ) {
   const { currentUser } = useContext(AuthContext);
   const dateObj = new Date();
@@ -24,6 +25,7 @@ function useOutsideAlerter(
   useEffect(() => {
     async function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
+        setFile(null);
         setShow(false);
         if (title !== "" || body !== "") {
           const temp = [...list];
@@ -65,7 +67,8 @@ function OutsideAlerter(props) {
     props.setBody,
     props.setTitle,
     props.list,
-    props.setList
+    props.setList,
+    props.setFile
   );
   return (
     <div className={props.className} ref={wrapperRef}>

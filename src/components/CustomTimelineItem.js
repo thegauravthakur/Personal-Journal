@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
 import TimelineDot from "@material-ui/lab/TimelineDot";
 import { FiEdit } from "react-icons/fi";
@@ -6,7 +6,7 @@ import { BsCheckCircle } from "react-icons/bs";
 import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineItem from "@material-ui/lab/TimelineItem";
-import { IconButton, Typography } from "@material-ui/core";
+import { CircularProgress, IconButton, Typography } from "@material-ui/core";
 import TimeAgo from "timeago-react";
 import UpdateInputField from "./UpdateInputField";
 import app from "../api/firebase";
@@ -22,13 +22,15 @@ const CustomTimelineItem = ({
   setList,
   activeDate,
 }) => {
-  const { title, body, writtenAt } = item;
+  const [imageLoading, setImageloading] = useState(false);
+  const { title, body, writtenAt, id } = item;
   const [show, setShow] = useState(false);
   const { currentUser } = useContext(AuthContext);
-
+  const [url, setUrl] = useState("");
   const [updateTitle, setUpdateTitle] = useState(list[index].title);
   const [updateBody, setUpdateBody] = useState(list[index].body);
   const onSubmitHandler = async () => {
+    console.log("onsubmit clicked");
     if ((updateBody.length > 0 || updateTitle.length > 0) && show) {
       const temp = [...list];
       if (
@@ -50,6 +52,27 @@ const CustomTimelineItem = ({
   const onClickHandler = async () => {
     await onSubmitHandler();
   };
+
+  useEffect(() => {
+    const doStuff = () => {
+      setImageloading(true);
+      console.log(id);
+      app
+        .storage()
+        .ref(`/${currentUser.uid}/${id}`)
+        .getDownloadURL()
+        .then((url) => {
+          setUrl(url);
+          setImageloading(false);
+        })
+        .catch((e) => {
+          setUrl(null);
+          console.log("big error bro");
+          setImageloading(false);
+        });
+    };
+    doStuff();
+  }, []);
   return (
     <OutsideAlerterUpdate
       setTitle={setUpdateTitle}
@@ -117,6 +140,18 @@ const CustomTimelineItem = ({
             >
               {body}
             </Typography>
+            {url ? (
+              <img
+                src={url}
+                alt={""}
+                style={{
+                  maxHeight: 200,
+                  paddingBottom: 10,
+                  maxWidth: "100%",
+                  display: "block",
+                }}
+              />
+            ) : null}
             {isDaySame(new Date(), new Date(parseInt(writtenAt))) ? (
               <TimeAgo datetime={parseInt(writtenAt)} />
             ) : (
