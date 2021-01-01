@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "in.gauravthakur.journal.twa",
+                   "sha256_cert_fingerprints": ["BF:09:E4:D4:19:FE:1C:1B:FA:95:39:9C:1F:DC:DC:34:3F:92:5D:85:FB:4F:2C:2C:1B:2D:A3:86:4E:2D:38:8E"] }
+    }]
