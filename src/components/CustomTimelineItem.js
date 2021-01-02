@@ -6,13 +6,18 @@ import { BsCheckCircle } from "react-icons/bs";
 import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineItem from "@material-ui/lab/TimelineItem";
-import { CircularProgress, IconButton, Typography } from "@material-ui/core";
+import { IconButton, LinearProgress, Typography } from "@material-ui/core";
 import TimeAgo from "timeago-react";
 import UpdateInputField from "./UpdateInputField";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
 import OutsideAlerterUpdate from "./OutsideAlerterUpdate";
-import { formatAMPM, isDaySame } from "../utils/helperFunctions";
+import {
+  formatAMPM,
+  getDateInStorageFormat,
+  isDaySame,
+  resizeFile,
+} from "../utils/helperFunctions";
 
 const CustomTimelineItem = ({
   isLast,
@@ -22,6 +27,7 @@ const CustomTimelineItem = ({
   setList,
   activeDate,
 }) => {
+  const [file, setFile] = useState(null);
   const [imageLoading, setImageloading] = useState(false);
   const { title, body, writtenAt, id } = item;
   const [show, setShow] = useState(false);
@@ -29,9 +35,45 @@ const CustomTimelineItem = ({
   const [url, setUrl] = useState("");
   const [updateTitle, setUpdateTitle] = useState(list[index].title);
   const [updateBody, setUpdateBody] = useState(list[index].body);
+  const [progress, setProgress] = useState(null);
   const onSubmitHandler = async () => {
     console.log("onsubmit clicked");
-    if ((updateBody.length > 0 || updateTitle.length > 0) && show) {
+    if ((updateBody.length > 0 || updateTitle.length > 0) && show && file) {
+      const temp = [...list];
+      const image = await resizeFile(file, setProgress);
+      let uploadTask = app
+        .storage()
+        .ref(
+          `/${currentUser.uid}/${getDateInStorageFormat(new Date())}/${
+            temp[index].id
+          }`
+        )
+        .putString(image, "data_url");
+      uploadTask.on("TaskEvent.STATE_CHANGED", async function (snapshot) {
+        const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        if (percent > 1) setProgress(percent);
+      });
+      uploadTask.on("state_changed", console.log, console.error, () => {
+        if (
+          updateTitle !== temp[index].title ||
+          updateBody !== temp[index].body
+        ) {
+          temp[index].title = updateTitle;
+          temp[index].body = updateBody;
+          setList(temp);
+
+          app
+            .firestore()
+            .collection(currentUser.uid)
+            .doc(activeDate)
+            .set({ data: temp }, { merge: true });
+        }
+        setProgress(null);
+        setList(temp);
+        setShow(false);
+        setFile(null);
+      });
+    } else if ((updateBody.length > 0 || updateTitle.length > 0) && show) {
       const temp = [...list];
       if (
         updateTitle !== temp[index].title ||
@@ -40,14 +82,15 @@ const CustomTimelineItem = ({
         temp[index].title = updateTitle;
         temp[index].body = updateBody;
         setList(temp);
+
         await app
           .firestore()
           .collection(currentUser.uid)
           .doc(activeDate)
           .set({ data: temp }, { merge: true });
       }
+      setShow(false);
     }
-    setShow(false);
   };
   const onClickHandler = async () => {
     await onSubmitHandler();
@@ -59,7 +102,7 @@ const CustomTimelineItem = ({
       console.log(id);
       app
         .storage()
-        .ref(`/${currentUser.uid}/${id}`)
+        .ref(`/${currentUser.uid}/${getDateInStorageFormat(new Date())}/${id}`)
         .getDownloadURL()
         .then((url) => {
           setUrl(url);
@@ -72,7 +115,7 @@ const CustomTimelineItem = ({
         });
     };
     doStuff();
-  }, []);
+  }, [list]);
   return (
     <OutsideAlerterUpdate
       setTitle={setUpdateTitle}
@@ -111,7 +154,18 @@ const CustomTimelineItem = ({
         </TimelineSeparator>
         {show ? (
           <TimelineContent>
+            {progress ? (
+              <LinearProgress
+                style={{ marginBottom: 10 }}
+                variant="determinate"
+                value={progress}
+              />
+            ) : null}
             <UpdateInputField
+              setUrl={setUrl}
+              url={url}
+              setFile={setFile}
+              file={file}
               activeDate={activeDate}
               show={show}
               setShow={setShow}

@@ -1,10 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./OutsideAlerter.css";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import { Grid, IconButton } from "@material-ui/core";
+import { Grid, Icon, IconButton } from "@material-ui/core";
 import { MdDelete } from "react-icons/md";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
+import { BiCameraOff } from "react-icons/bi";
+import { IoMdReverseCamera } from "react-icons/io";
+import CameraPicker from "./CameraPicker";
+import { getDateInStorageFormat } from "../utils/helperFunctions";
 
 const UpdateInputField = ({
   list,
@@ -14,17 +18,25 @@ const UpdateInputField = ({
   setTitle,
   setBody,
   activeDate,
+  file,
+  setFile,
+  url,
+  setUrl,
 }) => {
   const { currentUser } = useContext(AuthContext);
-
   const onDeleteHandler = async () => {
     const temp = [...list];
     const data = temp[index];
     temp.splice(index, 1);
     setList(temp);
     setShow(false);
+    await app
+      .storage()
+      .ref(
+        `/${currentUser.uid}/${getDateInStorageFormat(new Date())}/${data.id}`
+      )
+      .delete();
     if (temp.length > 0) {
-      await app.storage().ref(`/${currentUser.uid}/${data.id}`).delete();
       await app
         .firestore()
         .collection(currentUser.uid)
@@ -61,11 +73,42 @@ const UpdateInputField = ({
           placeholder="Take a note..."
           className="body"
         />
+        {file || url ? (
+          <img
+            style={{
+              maxHeight: 100,
+              maxWidth: "100%",
+              display: "block",
+            }}
+            src={file ? URL.createObjectURL(file) : url}
+            alt={"file"}
+          />
+        ) : null}
         <Grid>
           <Grid item>
             <IconButton onClick={onDeleteHandler} size="small">
               <MdDelete />
             </IconButton>
+            <IconButton
+              onClick={() => {
+                if (url) {
+                  app
+                    .storage()
+                    .ref(
+                      `/${currentUser.uid}/${getDateInStorageFormat(
+                        new Date()
+                      )}/${list[index].id}`
+                    )
+                    .delete();
+                  setUrl(null);
+                  setFile(null);
+                }
+              }}
+              size={"small"}
+            >
+              <BiCameraOff />
+            </IconButton>
+            <CameraPicker size={"small"} file={file} setFile={setFile} />
           </Grid>
         </Grid>
       </div>

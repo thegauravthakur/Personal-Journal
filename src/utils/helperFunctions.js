@@ -1,3 +1,5 @@
+import Resizer from "react-image-file-resizer";
+
 const getCurrentMonth = () => {
   const monthNames = [
     "January",
@@ -76,4 +78,28 @@ export const getHostName = (url) => {
   const parser = document.createElement("a");
   parser.href = url;
   return parser.hostname;
+};
+
+export const resizeFile = (file, setProgress) =>
+  new Promise((resolve) => {
+    setProgress(1);
+    Resizer.imageFileResizer(
+      file,
+      2000,
+      2000,
+      "JPEG",
+      70,
+      0,
+      (uri) => {
+        resolve(uri);
+      },
+      "base64"
+    );
+  });
+
+export const getDateInStorageFormat = (date) => {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  return `${day}:${month}:${year}`;
 };

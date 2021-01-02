@@ -11,6 +11,7 @@ import { AuthContext } from "../context/Provider";
 import CustomInputField from "./CustomInputField";
 import OutsideAlerter from "./OutsideAlerter";
 import { v4 as uuidv4 } from "uuid";
+import { getDateInStorageFormat, resizeFile } from "../utils/helperFunctions";
 
 const AddNewItem = ({ list, setList }) => {
   const [progress, setProgress] = useState(null);
@@ -30,21 +31,28 @@ const AddNewItem = ({ list, setList }) => {
         writtenAt: Date.now().toString(),
         id: uuidv4(),
       };
+      const image = await resizeFile(file, setProgress);
       let uploadTask = app
         .storage()
-        .ref(`/${currentUser.uid}/${data.id}`)
-        .put(file);
+        .ref(
+          `/${currentUser.uid}/${getDateInStorageFormat(new Date())}/${data.id}`
+        )
+        .putString(image, "data_url");
 
       uploadTask.on("TaskEvent.STATE_CHANGED", async function (snapshot) {
         const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setProgress(percent);
+        if (percent > 1) setProgress(percent);
         if (percent === 100) {
         }
       });
       uploadTask.on("state_changed", console.log, console.error, () => {
         app
           .storage()
-          .ref(`/${currentUser.uid}/${data.id}`)
+          .ref(
+            `/${currentUser.uid}/${getDateInStorageFormat(new Date())}/${
+              data.id
+            }`
+          )
           .getDownloadURL()
           .then(async (url) => {
             setProgress(null);
@@ -115,7 +123,11 @@ const AddNewItem = ({ list, setList }) => {
         </TimelineSeparator>
         <TimelineContent style={{ marginBottom: 30 }}>
           {progress ? (
-            <LinearProgress variant="determinate" value={progress} />
+            <LinearProgress
+              style={{ marginBottom: 10 }}
+              variant="determinate"
+              value={progress}
+            />
           ) : null}
           <CustomInputField
             file={file}
