@@ -24,7 +24,7 @@ const CustomAppbar = ({ setDrawer }) => {
   const classes = useStyles();
   const matches = useMediaQuery("(min-width:600px)");
   return (
-    <AppBar style={{ backgroundColor: "#f5f4f4" }} position="relative">
+    <AppBar style={{ backgroundColor: "#f5f4f4" }} position="static">
       <Toolbar>
         <IconButton
           size={!matches ? "small" : "medium"}

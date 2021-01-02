@@ -1,17 +1,14 @@
 import React, { useEffect } from "react";
-import Axios from "axios";
+import { useTheme } from "@material-ui/core";
 
 const Playground = () => {
+  const theme = useTheme();
   return (
     <div>
       <p>playground</p>
       <button
         onClick={() => {
-          Axios({
-            url:
-              "http://localhost:3001/upload?destination=outerFolder/innerFolder/package.json",
-            method: "POST",
-          }).then((d) => console.log(d));
+          console.log(theme.palette.type);
         }}
       >
         click

@@ -36,7 +36,7 @@ export const formattedDate = (d) => {
   const day = english_ordinal_suffix(d);
   const year = d.getFullYear();
   const month = getCurrentMonth();
-  return month.toString() + " " + day.toString() + ", " + (year - 1).toString();
+  return month.toString() + " " + day.toString() + ", " + year.toString();
 };
 
 export const formatAMPM = (date) => {

@@ -6,7 +6,12 @@ import { BsCheckCircle } from "react-icons/bs";
 import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineItem from "@material-ui/lab/TimelineItem";
-import { IconButton, LinearProgress, Typography } from "@material-ui/core";
+import {
+  Dialog,
+  IconButton,
+  LinearProgress,
+  Typography,
+} from "@material-ui/core";
 import TimeAgo from "timeago-react";
 import UpdateInputField from "./UpdateInputField";
 import app from "../api/firebase";
@@ -18,6 +23,7 @@ import {
   isDaySame,
   resizeFile,
 } from "../utils/helperFunctions";
+import SimpleDialog from "./SimpleDialog";
 
 const CustomTimelineItem = ({
   isLast,
@@ -26,6 +32,9 @@ const CustomTimelineItem = ({
   list,
   setList,
   activeDate,
+  dialog,
+  setDialog,
+  setActiveImage,
 }) => {
   const [file, setFile] = useState(null);
   const [imageLoading, setImageloading] = useState(false);
@@ -117,104 +126,111 @@ const CustomTimelineItem = ({
     doStuff();
   }, [list]);
   return (
-    <OutsideAlerterUpdate
-      setTitle={setUpdateTitle}
-      setBody={setUpdateBody}
-      title={updateTitle}
-      body={updateBody}
-      show={show}
-      setShow={setShow}
-      className="root"
-      list={list}
-      setList={setList}
-    >
-      <TimelineItem style={{}}>
-        <TimelineSeparator style={{}}>
-          <TimelineDot
-            style={{
-              // -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-              WebkitTapHighlightColor: "rgba(255, 255, 255, 0)",
-              backgroundColor: "#F3F4F6",
-              cursor: "pointer",
-              padding: 0,
-              border: 0,
-            }}
-          >
-            {!show ? (
-              <IconButton onClick={() => setShow(true)} size="small">
-                <FiEdit style={{ padding: 5 }} color="#6C7385" />
-              </IconButton>
-            ) : (
-              <IconButton onClick={onClickHandler} size="small">
-                <BsCheckCircle style={{ padding: 5 }} color="#6C7385" />
-              </IconButton>
-            )}
-          </TimelineDot>
-          {!isLast ? <TimelineConnector /> : null}
-        </TimelineSeparator>
-        {show ? (
-          <TimelineContent>
-            {progress ? (
-              <LinearProgress
-                style={{ marginBottom: 10 }}
-                variant="determinate"
-                value={progress}
-              />
-            ) : null}
-            <UpdateInputField
-              setUrl={setUrl}
-              url={url}
-              setFile={setFile}
-              file={file}
-              activeDate={activeDate}
-              show={show}
-              setShow={setShow}
-              index={index}
-              list={list}
-              setList={setList}
-              body={updateBody}
-              setBody={setUpdateBody}
-              title={updateTitle}
-              setTitle={setUpdateTitle}
-            />
-          </TimelineContent>
-        ) : (
-          <TimelineContent style={{ marginBottom: 30 }}>
-            <Typography
+    <div>
+      <OutsideAlerterUpdate
+        setTitle={setUpdateTitle}
+        setBody={setUpdateBody}
+        title={updateTitle}
+        body={updateBody}
+        show={show}
+        setShow={setShow}
+        className="root"
+        list={list}
+        setList={setList}
+      >
+        <TimelineItem style={{}}>
+          <TimelineSeparator style={{}}>
+            <TimelineDot
               style={{
-                fontWeight: "bolder",
-                fontSize: 19,
-                fontFamily: '"Segoe UI", serif',
+                // -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+                WebkitTapHighlightColor: "rgba(255, 255, 255, 0)",
+                backgroundColor: "#F3F4F6",
+                cursor: "pointer",
+                padding: 0,
+                border: 0,
               }}
             >
-              {title}
-            </Typography>
-            <Typography
-              style={{ marginBottom: 10, fontFamily: '"Segoe UI", serif' }}
-            >
-              {body}
-            </Typography>
-            {url ? (
-              <img
-                src={url}
-                alt={""}
-                style={{
-                  maxHeight: 200,
-                  paddingBottom: 10,
-                  maxWidth: "100%",
-                  display: "block",
-                }}
+              {!show ? (
+                <IconButton onClick={() => setShow(true)} size="small">
+                  <FiEdit style={{ padding: 5 }} color="#6C7385" />
+                </IconButton>
+              ) : (
+                <IconButton onClick={onClickHandler} size="small">
+                  <BsCheckCircle style={{ padding: 5 }} color="#6C7385" />
+                </IconButton>
+              )}
+            </TimelineDot>
+            {!isLast ? <TimelineConnector /> : null}
+          </TimelineSeparator>
+          {show ? (
+            <TimelineContent>
+              {progress ? (
+                <LinearProgress
+                  style={{ marginBottom: 10 }}
+                  variant="determinate"
+                  value={progress}
+                />
+              ) : null}
+              <UpdateInputField
+                setUrl={setUrl}
+                url={url}
+                setFile={setFile}
+                file={file}
+                activeDate={activeDate}
+                show={show}
+                setShow={setShow}
+                index={index}
+                list={list}
+                setList={setList}
+                body={updateBody}
+                setBody={setUpdateBody}
+                title={updateTitle}
+                setTitle={setUpdateTitle}
               />
-            ) : null}
-            {isDaySame(new Date(), new Date(parseInt(writtenAt))) ? (
-              <TimeAgo datetime={parseInt(writtenAt)} />
-            ) : (
-              formatAMPM(new Date(parseInt(writtenAt)))
-            )}
-          </TimelineContent>
-        )}
-      </TimelineItem>
-    </OutsideAlerterUpdate>
+            </TimelineContent>
+          ) : (
+            <TimelineContent style={{ marginBottom: 30 }}>
+              <Typography
+                style={{
+                  fontWeight: "bolder",
+                  fontSize: 19,
+                  fontFamily: '"Segoe UI", serif',
+                }}
+              >
+                {title}
+              </Typography>
+              <Typography
+                style={{ marginBottom: 10, fontFamily: '"Segoe UI", serif' }}
+              >
+                {body}
+              </Typography>
+              {url ? (
+                <img
+                  onClick={() => {
+                    setActiveImage(url);
+                    setDialog(true);
+                  }}
+                  src={url}
+                  alt={""}
+                  style={{
+                    maxHeight: 200,
+                    paddingBottom: 10,
+                    maxWidth: "100%",
+                    display: "block",
+                    cursor: "pointer",
+                  }}
+                />
+              ) : null}
+              {isDaySame(new Date(), new Date(parseInt(writtenAt))) ? (
+                <TimeAgo datetime={parseInt(writtenAt)} />
+              ) : (
+                formatAMPM(new Date(parseInt(writtenAt)))
+              )}
+            </TimelineContent>
+          )}
+        </TimelineItem>
+      </OutsideAlerterUpdate>
+    </div>
   );
 };
 

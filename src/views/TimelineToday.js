@@ -16,9 +16,12 @@ import "../styles/calendar.css";
 import AddNewItem from "../components/AddNewItem";
 import CustomTimelineItem from "../components/CustomTimelineItem";
 import CustomDrawer from "../components/CustomDrawer";
+import SimpleDialog from "../components/SimpleDialog";
 
 const TimelineToday = () => {
   const [list, setList] = useState([]);
+  const [activeImage, setActiveImage] = useState(null);
+  const [dialog, setDialog] = useState(false);
   const { currentUser } = useContext(AuthContext);
   const [loading1, setLoading1] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -82,7 +85,11 @@ const TimelineToday = () => {
               }}
             >
               {formattedDate(
-                new Date(selectedDay.year, selectedDay.month, selectedDay.day)
+                new Date(
+                  selectedDay.year,
+                  selectedDay.month - 1,
+                  selectedDay.day
+                )
               )}
             </Typography>
           </Grid>
@@ -101,6 +108,9 @@ const TimelineToday = () => {
               {!loading1 ? (
                 list.map((item, index) => (
                   <CustomTimelineItem
+                    setActiveImage={setActiveImage}
+                    dialog={dialog}
+                    setDialog={setDialog}
                     index={index}
                     key={item.id}
                     item={item}
@@ -134,6 +144,11 @@ const TimelineToday = () => {
         </Grid>
       </Grid>
       <CustomDrawer drawer={drawer} setDrawer={setDrawer} />
+      <SimpleDialog
+        activeImage={activeImage}
+        dialog={dialog}
+        setDialog={setDialog}
+      />
     </Paper>
   );
 };
