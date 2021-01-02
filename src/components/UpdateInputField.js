@@ -61,12 +61,14 @@ const UpdateInputField = ({
     >
       <div>
         <input
+          style={{ fontWeight: "bolder", fontSize: 18 }}
           defaultValue={list[index].title}
           onChange={(e) => setTitle(e.target.value)}
           className={"title"}
           placeholder="Title"
         />
         <TextareaAutosize
+          style={{ fontSize: 16 }}
           defaultValue={list[index].body}
           rowsMax={7}
           onChange={(e) => setBody(e.target.value)}
@@ -76,7 +78,9 @@ const UpdateInputField = ({
         {file || url ? (
           <img
             style={{
-              maxHeight: 100,
+              marginTop: 10,
+              marginBottom: 10,
+              maxHeight: 200,
               maxWidth: "100%",
               display: "block",
             }}
@@ -87,9 +91,10 @@ const UpdateInputField = ({
         <Grid>
           <Grid item>
             <IconButton onClick={onDeleteHandler} size="small">
-              <MdDelete />
+              <MdDelete size={22} />
             </IconButton>
             <IconButton
+              style={{ marginRight: 10, marginLeft: 6 }}
               onClick={() => {
                 if (url) {
                   app
@@ -106,7 +111,7 @@ const UpdateInputField = ({
               }}
               size={"small"}
             >
-              <BiCameraOff />
+              <BiCameraOff size={24} />
             </IconButton>
             <CameraPicker size={"small"} file={file} setFile={setFile} />
           </Grid>

@@ -213,8 +213,9 @@ const CustomTimelineItem = ({
                   src={url}
                   alt={""}
                   style={{
+                    borderRadius: "0.5rem",
                     maxHeight: 200,
-                    paddingBottom: 10,
+                    marginBottom: 10,
                     maxWidth: "100%",
                     display: "block",
                     cursor: "pointer",

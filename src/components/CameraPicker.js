@@ -10,14 +10,14 @@ const CameraPicker = ({ file, setFile, size }) => {
         component={"div"}
         style={!size ? { padding: 0, marginTop: 10 } : {}}
       >
-        <AiOutlineCamera />
+        <AiOutlineCamera size={size ? 25 : null} />
       </IconButton>
       <input
         onChange={(e) => {
           setFile(e.target.files[0]);
         }}
         type="file"
-        accept="image/*;capture=camera"
+        accept="image/*"
       />
     </label>
   );

@@ -30,12 +30,14 @@ const CustomInputField = ({
           onChange={(e) => setTitle(e.target.value)}
           className={"title"}
           style={{
+            fontSize: 18,
             display: !show ? "none" : "block",
             fontWeight: "bolder",
           }}
           placeholder="Title"
         />
         <TextareaAutosize
+          style={{ fontSize: 16 }}
           rowsMax={7}
           value={body}
           onChange={(e) => setBody(e.target.value)}
