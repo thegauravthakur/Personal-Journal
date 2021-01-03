@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import styled from "styled-components";
 import {
   AppBar,
   Button,
   IconButton,
-  makeStyles,
   Toolbar,
   Typography,
   useMediaQuery,
 } from "@material-ui/core";
 import app from "../api/firebase";
 import { GiHamburgerMenu } from "react-icons/gi";
-import DatePicker, { Calendar } from "react-modern-calendar-datepicker";
-import { BsCalendar, BsImage } from "react-icons/bs";
+import DatePicker from "react-modern-calendar-datepicker";
+import { BsCalendar } from "react-icons/bs";
+
 const CustomAppbar = ({
   setDrawer,
   selectedDay,
@@ -19,33 +20,32 @@ const CustomAppbar = ({
   datesId,
   setActiveDate,
 }) => {
-  const useStyles = makeStyles({
-    btn: {
-      color: "white",
-    },
-    brand: {
-      color: "black",
-      flexGrow: 1,
-    },
-  });
-  const classes = useStyles();
   const matches = useMediaQuery("(min-width:960px)");
   const matches2 = useMediaQuery("(min-width:430px)");
   const matches3 = useMediaQuery("(min-width:340px)");
+
+  const StyledAppBar = styled(AppBar)`
+    background-color: #f5f4f4;
+  `;
+
+  const StyledHamBurgerMenu = styled(IconButton)`
+    margin-right: 10px;
+  `;
+  const StyledBrand = styled(Typography)`
+    flex-grow: 1;
+    color: #034b4b;
+    font-family: "Segoe UI", serif;
+  `;
   return (
-    <AppBar style={{ backgroundColor: "#f5f4f4" }} position="static">
+    <StyledAppBar position="static">
       <Toolbar>
-        <IconButton
+        <StyledHamBurgerMenu
           size={!matches ? "small" : "medium"}
           onClick={() => setDrawer(true)}
-          style={{ marginRight: 10 }}
         >
           <GiHamburgerMenu />
-        </IconButton>
-        <Typography variant={"h6"} className={classes.brand}>
-          Personal Journal
-        </Typography>
-
+        </StyledHamBurgerMenu>
+        <StyledBrand variant={"h6"}>Everyday Journal</StyledBrand>
         {matches ? (
           <Button
             variant={"outlined"}
@@ -71,12 +71,12 @@ const CustomAppbar = ({
                   <BsCalendar />
                 </IconButton>
               )
-            } // render a custom input
+            }
             shouldHighlightWeekends
           />
         )}
       </Toolbar>
-    </AppBar>
+    </StyledAppBar>
   );
 };
 
