@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import {
   AppBar,
   Button,
@@ -24,28 +23,26 @@ const CustomAppbar = ({
   const matches2 = useMediaQuery("(min-width:430px)");
   const matches3 = useMediaQuery("(min-width:340px)");
 
-  const StyledAppBar = styled(AppBar)`
-    background-color: #f5f4f4;
-  `;
-
-  const StyledHamBurgerMenu = styled(IconButton)`
-    margin-right: 10px;
-  `;
-  const StyledBrand = styled(Typography)`
-    flex-grow: 1;
-    color: #034b4b;
-    font-family: "Segoe UI", serif;
-  `;
   return (
-    <StyledAppBar position="static">
+    <AppBar style={{ backgroundColor: "#f5f4f4" }} position="static">
       <Toolbar>
-        <StyledHamBurgerMenu
+        <IconButton
+          style={{ marginRight: 10 }}
           size={!matches ? "small" : "medium"}
           onClick={() => setDrawer(true)}
         >
           <GiHamburgerMenu />
-        </StyledHamBurgerMenu>
-        <StyledBrand variant={"h6"}>Everyday Journal</StyledBrand>
+        </IconButton>
+        <Typography
+          style={{
+            flexGrow: 1,
+            color: "#034b4b",
+            fontFamily: '"Segoe UI", serif',
+          }}
+          variant={"h6"}
+        >
+          Everyday Journal
+        </Typography>
         {matches ? (
           <Button
             variant={"outlined"}
@@ -76,7 +73,7 @@ const CustomAppbar = ({
           />
         )}
       </Toolbar>
-    </StyledAppBar>
+    </AppBar>
   );
 };
 

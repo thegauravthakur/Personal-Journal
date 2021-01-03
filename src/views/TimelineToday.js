@@ -1,13 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import styled from "styled-components";
 import Timeline from "@material-ui/lab/Timeline";
-import {
-  CircularProgress,
-  Grid,
-  makeStyles,
-  Paper,
-  Typography,
-} from "@material-ui/core";
+import { CircularProgress, Grid, Paper, Typography } from "@material-ui/core";
 import CustomAppbar from "../components/CustomAppbar";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
@@ -38,7 +31,6 @@ const TimelineToday = () => {
     day: new Date().getDate(),
   };
   const [selectedDay, setSelectedDay] = useState(defaultValue);
-  const classes = useStyle();
   useEffect(() => {
     setLoading1(true);
     const ref = app.firestore().collection(currentUser.uid).doc(activeDate);
@@ -168,10 +160,4 @@ const TimelineToday = () => {
     </Paper>
   );
 };
-const useStyle = makeStyles({
-  root: {
-    minHeight: "100vh",
-  },
-  wrapper: {},
-});
 export default TimelineToday;
