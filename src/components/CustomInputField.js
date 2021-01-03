@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./OutsideAlerter.css";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import "./customInputField.css";
+import "./CustomInputField.css";
 import CameraPicker from "./CameraPicker";
 import { AiOutlineClose } from "react-icons/ai";
 import { IconButton } from "@material-ui/core";
@@ -17,9 +17,9 @@ const CustomInputField = ({
 }) => {
   return (
     <div
+      className="outer-box"
       style={{
         borderRadius: "10px",
-        border: "1px solid black",
         padding: 5,
         backgroundColor: "white",
       }}

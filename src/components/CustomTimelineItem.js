@@ -23,7 +23,6 @@ import {
   isDaySame,
   resizeFile,
 } from "../utils/helperFunctions";
-import SimpleDialog from "./SimpleDialog";
 
 const CustomTimelineItem = ({
   isLast,
@@ -32,7 +31,6 @@ const CustomTimelineItem = ({
   list,
   setList,
   activeDate,
-  dialog,
   setDialog,
   setActiveImage,
 }) => {
@@ -52,11 +50,7 @@ const CustomTimelineItem = ({
       const image = await resizeFile(file, setProgress);
       let uploadTask = app
         .storage()
-        .ref(
-          `/${currentUser.uid}/${getDateInStorageFormat(new Date())}/${
-            temp[index].id
-          }`
-        )
+        .ref(`/${currentUser.uid}/${activeDate}/${temp[index].id}`)
         .putString(image, "data_url");
       uploadTask.on("TaskEvent.STATE_CHANGED", async function (snapshot) {
         const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -108,10 +102,10 @@ const CustomTimelineItem = ({
   useEffect(() => {
     const doStuff = () => {
       setImageloading(true);
-      console.log(id);
+      console.log({ activeDate });
       app
         .storage()
-        .ref(`/${currentUser.uid}/${getDateInStorageFormat(new Date())}/${id}`)
+        .ref(`/${currentUser.uid}/${activeDate}/${id}`)
         .getDownloadURL()
         .then((url) => {
           setUrl(url);

@@ -1,15 +1,13 @@
 import React, { useContext, useState } from "react";
-import "./OutsideAlerter.css";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { Grid, Icon, IconButton } from "@material-ui/core";
 import { MdDelete } from "react-icons/md";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
 import { BiCameraOff } from "react-icons/bi";
-import { IoMdReverseCamera } from "react-icons/io";
 import CameraPicker from "./CameraPicker";
 import { getDateInStorageFormat } from "../utils/helperFunctions";
-
+import "./UpdateInputField.css";
 const UpdateInputField = ({
   list,
   setList,
@@ -24,44 +22,35 @@ const UpdateInputField = ({
   setUrl,
 }) => {
   const { currentUser } = useContext(AuthContext);
-  const onDeleteHandler = async () => {
+  const onDeleteHandler = () => {
     const temp = [...list];
     const data = temp[index];
     temp.splice(index, 1);
     setList(temp);
     setShow(false);
-    await app
-      .storage()
-      .ref(
-        `/${currentUser.uid}/${getDateInStorageFormat(new Date())}/${data.id}`
-      )
-      .delete();
+    app.storage().ref(`/${currentUser.uid}/${activeDate}/${data.id}`).delete();
     if (temp.length > 0) {
-      await app
+      console.log({ activeDate });
+      app
         .firestore()
         .collection(currentUser.uid)
         .doc(activeDate)
         .set({ data: temp }, { merge: true });
     } else {
-      await app
-        .firestore()
-        .collection(currentUser.uid)
-        .doc(activeDate)
-        .delete();
+      app.firestore().collection(currentUser.uid).doc(activeDate).delete();
     }
   };
   return (
     <div
+      className="outer-box"
       style={{
         borderRadius: "10px",
-        border: "1px solid black",
         padding: 5,
         backgroundColor: "white",
       }}
     >
       <div>
         <input
-          style={{ fontWeight: "bolder", fontSize: 18 }}
           defaultValue={list[index].title}
           onChange={(e) => setTitle(e.target.value)}
           className={"title"}
@@ -77,13 +66,7 @@ const UpdateInputField = ({
         />
         {file || url ? (
           <img
-            style={{
-              marginTop: 10,
-              marginBottom: 10,
-              maxHeight: 200,
-              maxWidth: "100%",
-              display: "block",
-            }}
+            className="image"
             src={file ? URL.createObjectURL(file) : url}
             alt={"file"}
           />
@@ -99,11 +82,7 @@ const UpdateInputField = ({
                 if (url) {
                   app
                     .storage()
-                    .ref(
-                      `/${currentUser.uid}/${getDateInStorageFormat(
-                        new Date()
-                      )}/${list[index].id}`
-                    )
+                    .ref(`/${currentUser.uid}/${activeDate}/${list[index].id}`)
                     .delete();
                   setUrl(null);
                   setFile(null);

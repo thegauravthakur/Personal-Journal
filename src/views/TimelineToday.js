@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import styled from "styled-components";
 import Timeline from "@material-ui/lab/Timeline";
 import {
   CircularProgress,
@@ -68,22 +69,30 @@ const TimelineToday = () => {
     });
   }, [list]);
 
+  const StyledHeader = styled(Typography)`
+    font-weight: bolder;
+    color: #334155;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-family: "Segoe UI", serif;
+  `;
+
+  const StyledPaper = styled(Paper)`
+    min-height: 100vh;
+  `;
   return (
-    <Paper className={classes.root}>
-      <CustomAppbar setDrawer={setDrawer} />
+    <StyledPaper>
+      <CustomAppbar
+        setSelectedDay={setSelectedDay}
+        setActiveDate={setActiveDate}
+        selectedDay={selectedDay}
+        datesId={datesId}
+        setDrawer={setDrawer}
+      />
       <Grid container justify="space-evenly">
         <Grid xs={11} sm={8} md={6} lg={4} item container direction="column">
           <Grid item>
-            <Typography
-              variant="h4"
-              style={{
-                fontWeight: "bolder",
-                color: "#334155",
-                marginTop: 30,
-                marginBottom: 20,
-                fontFamily: '"Segoe UI", serif',
-              }}
-            >
+            <StyledHeader variant={"h4"}>
               {formattedDate(
                 new Date(
                   selectedDay.year,
@@ -91,7 +100,7 @@ const TimelineToday = () => {
                   selectedDay.day
                 )
               )}
-            </Typography>
+            </StyledHeader>
           </Grid>
           <Grid item>
             <Timeline align="left" style={{ padding: 0, margin: 0 }}>
@@ -143,13 +152,20 @@ const TimelineToday = () => {
           </div>
         </Grid>
       </Grid>
-      <CustomDrawer drawer={drawer} setDrawer={setDrawer} />
+      <CustomDrawer
+        datesId={datesId}
+        selectedDay={selectedDay}
+        setActiveDate={setActiveDate}
+        setSelectedDay={setSelectedDay}
+        drawer={drawer}
+        setDrawer={setDrawer}
+      />
       <SimpleDialog
         activeImage={activeImage}
         dialog={dialog}
         setDialog={setDialog}
       />
-    </Paper>
+    </StyledPaper>
   );
 };
 const useStyle = makeStyles({

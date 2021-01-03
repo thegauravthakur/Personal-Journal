@@ -1,0 +1,54 @@
+.outer-box {
+    border: 1px solid black ;
+}
+.outer-box:focus-within {
+    border: 2px solid dodgerblue;
+}
+
+.root {
+    width: 100%;
+}
+@media (min-width: 640px) {
+    .root {
+        padding-left: 0;
+        padding-right: 0;
+        max-width: 24rem;
+    }
+}
+
+.body {
+    width: 100%;
+    max-height: 11rem;
+    resize: none;
+    border:none;
+    font-size: 14px;
+    font-family: "Segoe UI", serif
+}
+
+.body:focus {
+    outline: none;
+}
+
+.title {
+    width: 100%;
+    border:none;
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.title:focus {
+    outline: none;
+}
+
+.title::placeholder {
+    font-weight: normal;
+    font-family: "Segoe UI", serif
+}
+
+.image {
+    margin-top:10px;
+    margin-bottom:10px;
+    max-height: 200px;
+    max-width: 100%;
+    display: block;
+}

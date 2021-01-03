@@ -1,0 +1,6 @@
+.outer-box {
+    border: 1px solid black ;
+}
+.outer-box:focus-within {
+    border: 2px solid dodgerblue;
+}

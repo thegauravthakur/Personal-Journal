@@ -14,7 +14,17 @@ import app from "../api/firebase";
 import { AiFillSetting } from "react-icons/all";
 import { useHistory } from "react-router-dom";
 import "../styles/index.css";
-const CustomDrawer = ({ drawer, setDrawer }) => {
+import "./CustomDrawer.css";
+
+import { Calendar } from "react-modern-calendar-datepicker";
+const CustomDrawer = ({
+  drawer,
+  setDrawer,
+  datesId,
+  selectedDay,
+  setActiveDate,
+  setSelectedDay,
+}) => {
   const history = useHistory();
   const { photoURL, displayName } = app.auth().currentUser;
 
