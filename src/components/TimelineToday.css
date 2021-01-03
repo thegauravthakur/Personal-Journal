@@ -1,0 +1,11 @@
+.header {
+    font-weight: bolder;
+    color: #334155;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-family: "Segoe UI", serif;
+}
+
+.wrapper {
+    min-height: 100vh;
+}

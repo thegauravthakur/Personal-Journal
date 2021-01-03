@@ -18,6 +18,7 @@ import AddNewItem from "../components/AddNewItem";
 import CustomTimelineItem from "../components/CustomTimelineItem";
 import CustomDrawer from "../components/CustomDrawer";
 import SimpleDialog from "../components/SimpleDialog";
+import "../components/TimelineToday.css";
 
 const TimelineToday = () => {
   const [list, setList] = useState([]);
@@ -69,19 +70,8 @@ const TimelineToday = () => {
     });
   }, [list]);
 
-  const StyledHeader = styled(Typography)`
-    font-weight: bolder;
-    color: #334155;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    font-family: "Segoe UI", serif;
-  `;
-
-  const StyledPaper = styled(Paper)`
-    min-height: 100vh;
-  `;
   return (
-    <StyledPaper>
+    <Paper className="wrapper">
       <CustomAppbar
         setSelectedDay={setSelectedDay}
         setActiveDate={setActiveDate}
@@ -92,7 +82,17 @@ const TimelineToday = () => {
       <Grid container justify="space-evenly">
         <Grid xs={11} sm={8} md={6} lg={4} item container direction="column">
           <Grid item>
-            <StyledHeader variant={"h4"}>
+            <Typography
+              style={{
+                fontWeight: "bolder",
+                color: "#334155",
+                marginTop: 30,
+                marginBottom: 20,
+                fontFamily: "'Segoe UI', serif",
+              }}
+              className="header"
+              variant={"h4"}
+            >
               {formattedDate(
                 new Date(
                   selectedDay.year,
@@ -100,7 +100,7 @@ const TimelineToday = () => {
                   selectedDay.day
                 )
               )}
-            </StyledHeader>
+            </Typography>
           </Grid>
           <Grid item>
             <Timeline align="left" style={{ padding: 0, margin: 0 }}>
@@ -165,7 +165,7 @@ const TimelineToday = () => {
         dialog={dialog}
         setDialog={setDialog}
       />
-    </StyledPaper>
+    </Paper>
   );
 };
 const useStyle = makeStyles({
