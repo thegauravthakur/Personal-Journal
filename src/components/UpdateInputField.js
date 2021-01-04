@@ -1,12 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import { Grid, Icon, IconButton } from "@material-ui/core";
+import { Grid, IconButton, useMediaQuery } from "@material-ui/core";
 import { MdDelete } from "react-icons/md";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
 import { BiCameraOff } from "react-icons/bi";
 import CameraPicker from "./CameraPicker";
-import { getDateInStorageFormat } from "../utils/helperFunctions";
 import "./UpdateInputField.css";
 const UpdateInputField = ({
   list,
@@ -21,6 +20,7 @@ const UpdateInputField = ({
   url,
   setUrl,
 }) => {
+  const matches = useMediaQuery("(min-width:500px)");
   const { currentUser } = useContext(AuthContext);
   const onDeleteHandler = () => {
     const temp = [...list];
@@ -66,6 +66,7 @@ const UpdateInputField = ({
         />
         {file || url ? (
           <img
+            style={{ maxHeight: !matches ? 200 : 250 }}
             className="image"
             src={file ? URL.createObjectURL(file) : url}
             alt={"file"}

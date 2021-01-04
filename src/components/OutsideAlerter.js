@@ -15,35 +15,16 @@ function useOutsideAlerter(
   setBody,
   list,
   setList,
-  setFile
+  setFile,
+  onClickHandler
 ) {
-  const { currentUser } = useContext(AuthContext);
-  const dateObj = new Date();
-  const month = dateObj.getUTCMonth() + 1; //months from 1-12
-  const day = dateObj.getUTCDate();
-  const year = dateObj.getUTCFullYear();
   useEffect(() => {
     async function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
+        setTitle("");
         setFile(null);
+        setBody("");
         setShow(false);
-        if (title !== "" || body !== "") {
-          const temp = [...list];
-          temp.unshift({
-            title,
-            body,
-            writtenAt: Date.now().toString(),
-            id: uuidv4(),
-          });
-          setTitle("");
-          setBody("");
-          await app
-            .firestore()
-            .collection(currentUser.uid)
-            .doc(`${day}:${month}:${year}`)
-            .set({ data: temp }, { merge: true })
-            .then(() => setList(temp));
-        }
       }
     }
 
@@ -68,7 +49,8 @@ function OutsideAlerter(props) {
     props.setTitle,
     props.list,
     props.setList,
-    props.setFile
+    props.setFile,
+    props.onClickHandler
   );
   return (
     <div className={props.className} ref={wrapperRef}>

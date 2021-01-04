@@ -94,6 +94,7 @@ const AddNewItem = ({ list, setList }) => {
   const [show, setShow] = React.useState(false);
   return (
     <OutsideAlerter
+      onClickHandler={onClickHandler}
       setFile={setFile}
       setTitle={setTitle}
       setBody={setBody}

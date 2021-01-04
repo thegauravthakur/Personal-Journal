@@ -7,22 +7,17 @@ import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineItem from "@material-ui/lab/TimelineItem";
 import {
-  Dialog,
   IconButton,
   LinearProgress,
   Typography,
+  useMediaQuery,
 } from "@material-ui/core";
 import TimeAgo from "timeago-react";
 import UpdateInputField from "./UpdateInputField";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
 import OutsideAlerterUpdate from "./OutsideAlerterUpdate";
-import {
-  formatAMPM,
-  getDateInStorageFormat,
-  isDaySame,
-  resizeFile,
-} from "../utils/helperFunctions";
+import { formatAMPM, isDaySame, resizeFile } from "../utils/helperFunctions";
 
 const CustomTimelineItem = ({
   isLast,
@@ -34,8 +29,8 @@ const CustomTimelineItem = ({
   setDialog,
   setActiveImage,
 }) => {
+  const matches = useMediaQuery("(min-width:500px)");
   const [file, setFile] = useState(null);
-  const [imageLoading, setImageloading] = useState(false);
   const { title, body, writtenAt, id } = item;
   const [show, setShow] = useState(false);
   const { currentUser } = useContext(AuthContext);
@@ -101,7 +96,6 @@ const CustomTimelineItem = ({
 
   useEffect(() => {
     const doStuff = () => {
-      setImageloading(true);
       console.log({ activeDate });
       app
         .storage()
@@ -109,12 +103,10 @@ const CustomTimelineItem = ({
         .getDownloadURL()
         .then((url) => {
           setUrl(url);
-          setImageloading(false);
         })
         .catch((e) => {
           setUrl(null);
           console.log("big error bro");
-          setImageloading(false);
         });
     };
     doStuff();
@@ -208,7 +200,7 @@ const CustomTimelineItem = ({
                   alt={""}
                   style={{
                     borderRadius: "0.5rem",
-                    maxHeight: 200,
+                    maxHeight: !matches ? 200 : 250,
                     marginBottom: 10,
                     maxWidth: "100%",
                     display: "block",
@@ -217,7 +209,10 @@ const CustomTimelineItem = ({
                 />
               ) : null}
               {isDaySame(new Date(), new Date(parseInt(writtenAt))) ? (
-                <TimeAgo datetime={parseInt(writtenAt)} />
+                <TimeAgo
+                  style={{ fontFamily: '"Segoe UI", serif' }}
+                  datetime={parseInt(writtenAt)}
+                />
               ) : (
                 formatAMPM(new Date(parseInt(writtenAt)))
               )}
