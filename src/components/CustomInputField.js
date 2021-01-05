@@ -25,7 +25,7 @@ const CustomInputField = ({
       }}
     >
       <div>
-        <input
+        <TextareaAutosize
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           className={"title"}
@@ -37,6 +37,7 @@ const CustomInputField = ({
           placeholder="Title"
         />
         <TextareaAutosize
+          inputMode="text"
           style={{ fontSize: 16 }}
           rowsMax={7}
           value={show ? body : ""}

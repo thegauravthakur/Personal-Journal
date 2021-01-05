@@ -48,6 +48,7 @@ export default function StarredCard({ title, date, body, index, docName, id }) {
             fontSize: 18,
             fontFamily: '"Segoe UI", serif',
             fontWeight: "bolder",
+            color: "#52525B",
           },
         }}
         avatar={
@@ -79,6 +80,7 @@ export default function StarredCard({ title, date, body, index, docName, id }) {
           style={{
             fontSize: 16,
             fontFamily: '"Segoe UI", serif',
+            color: "#71717A",
           }}
           variant="body2"
           color="textSecondary"
