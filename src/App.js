@@ -6,6 +6,7 @@ import LoginScreen from "./views/LoginScreen";
 import SettingsPage from "./views/SettingsPage";
 import EditProfile from "./views/EditProfile";
 import Playground from "./views/Playground";
+import StarredView from "./views/StarredView";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route exact path="/login" component={LoginScreen} />
       <ProtectedRoute exact path="/settings" component={SettingsPage} />
       <ProtectedRoute exact path="/edit-profile" component={EditProfile} />
+      <ProtectedRoute exact path="/starred" component={StarredView} />
       <ProtectedRoute path={"/playground"} component={Playground} exact />
       <ProtectedRoute component={TimelineToday} exact />
     </Switch>

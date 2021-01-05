@@ -1,9 +1,16 @@
 import React, { useContext, useState } from "react";
 import SettingAppbar from "../components/SettingAppbar";
-import { Avatar, Button, Container, TextField } from "@material-ui/core";
+import {
+  Avatar,
+  Button,
+  Container,
+  LinearProgress,
+  TextField,
+} from "@material-ui/core";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
 import "../styles/EditProfile.css";
+import { getDateInStorageFormat, resizeFile } from "../utils/helperFunctions";
 
 const EditProfile = () => {
   const { currentUser } = useContext(AuthContext);
@@ -11,21 +18,30 @@ const EditProfile = () => {
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(currentUser.photoURL);
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(null);
   function handleChange(e) {
     setFile(e.target.files[0]);
   }
 
-  function handleUpload(e) {
+  async function handleUpload(e) {
     e.preventDefault();
     setLoading(true);
     let check = false;
     if (file) {
       check = true;
-      const uploadTask = app
+      const image = await resizeFile(file, setProgress);
+      let uploadTask = app
         .storage()
         .ref(`/${currentUser.uid}/profile`)
-        .put(file);
+        .putString(image, "data_url");
+      uploadTask.on("TaskEvent.STATE_CHANGED", async function (snapshot) {
+        const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        if (percent > 1) setProgress(percent);
+        if (percent === 100) {
+        }
+      });
       uploadTask.on("state_changed", console.log, console.error, () => {
+        setProgress(null);
         app
           .storage()
           .ref(`/${currentUser.uid}/profile`)
@@ -55,6 +71,9 @@ const EditProfile = () => {
     <div>
       <SettingAppbar title={"Edit Profile"} />
       <Container maxWidth={"sm"} style={{ marginTop: 50 }}>
+        {progress ? (
+          <LinearProgress variant={"determinate"} value={progress} />
+        ) : null}
         <label className="custom-file-upload">
           <input accept="image/*" type="file" onChange={handleChange} />
           <Avatar

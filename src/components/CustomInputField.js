@@ -39,16 +39,20 @@ const CustomInputField = ({
         <TextareaAutosize
           style={{ fontSize: 16 }}
           rowsMax={7}
-          value={body}
+          value={show ? body : ""}
           onChange={(e) => setBody(e.target.value)}
           onFocus={() => {
             setShow(true);
           }}
-          placeholder="Take a note..."
+          placeholder={
+            (body !== "" || title !== "") && !show
+              ? "Take a note (draft)"
+              : "Take a note..."
+          }
           rows={1}
           className="body"
         />
-        {file ? (
+        {file && show ? (
           <img
             style={{
               maxHeight: 100,

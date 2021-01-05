@@ -6,7 +6,9 @@ import { BsCheckCircle } from "react-icons/bs";
 import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineItem from "@material-ui/lab/TimelineItem";
+import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import {
+  CardMedia,
   IconButton,
   LinearProgress,
   Typography,
@@ -18,6 +20,7 @@ import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
 import OutsideAlerterUpdate from "./OutsideAlerterUpdate";
 import { formatAMPM, isDaySame, resizeFile } from "../utils/helperFunctions";
+import { AiFillSetting } from "react-icons/all";
 
 const CustomTimelineItem = ({
   isLast,
@@ -38,6 +41,18 @@ const CustomTimelineItem = ({
   const [updateTitle, setUpdateTitle] = useState(list[index].title);
   const [updateBody, setUpdateBody] = useState(list[index].body);
   const [progress, setProgress] = useState(null);
+  const [starredList, setStarredList] = useState([]);
+  useEffect(() => {
+    app
+      .firestore()
+      .collection(currentUser.uid)
+      .doc("starred")
+      .onSnapshot((s) => {
+        if (s.exists) {
+          setStarredList(s.data().ref);
+        }
+      });
+  }, []);
   const onSubmitHandler = async () => {
     console.log("onsubmit clicked");
     if ((updateBody.length > 0 || updateTitle.length > 0) && show && file) {
@@ -207,15 +222,63 @@ const CustomTimelineItem = ({
                     cursor: "pointer",
                   }}
                 />
-              ) : null}
-              {isDaySame(new Date(), new Date(parseInt(writtenAt))) ? (
-                <TimeAgo
-                  style={{ fontFamily: '"Segoe UI", serif' }}
-                  datetime={parseInt(writtenAt)}
-                />
-              ) : (
-                formatAMPM(new Date(parseInt(writtenAt)))
-              )}
+              ) : // <CardMedia image={url} style={{ paddingTop: "56.25%" }} />
+              null}
+              <div style={{ display: "flex" }}>
+                {isDaySame(new Date(), new Date(parseInt(writtenAt))) ? (
+                  <TimeAgo
+                    style={{ fontFamily: '"Segoe UI", serif' }}
+                    datetime={parseInt(writtenAt)}
+                  />
+                ) : (
+                  formatAMPM(new Date(parseInt(writtenAt)))
+                )}
+                {starredList.filter((item) => item.id === list[index].id)
+                  .length === 1 ? (
+                  <AiFillStar
+                    onClick={async () => {
+                      const temp = starredList.filter(
+                        (item) => item.id !== list[index].id
+                      );
+                      setStarredList(temp);
+                      await app
+                        .firestore()
+                        .collection(currentUser.uid)
+                        .doc("starred")
+                        .set({ ref: temp });
+                    }}
+                    style={{
+                      alignSelf: "flex-end",
+                      marginLeft: 5,
+                      cursor: "pointer",
+                    }}
+                  />
+                ) : (
+                  <AiOutlineStar
+                    onClick={async () => {
+                      const ref = await app
+                        .firestore()
+                        .collection(currentUser.uid)
+                        .doc(activeDate);
+                      await app
+                        .firestore()
+                        .collection(currentUser.uid)
+                        .doc("starred")
+                        .set(
+                          {
+                            ref: [...starredList, { ref, id: list[index].id }],
+                          },
+                          { merge: true }
+                        );
+                    }}
+                    style={{
+                      alignSelf: "flex-end",
+                      marginLeft: 5,
+                      cursor: "pointer",
+                    }}
+                  />
+                )}
+              </div>
             </TimelineContent>
           )}
         </TimelineItem>

@@ -7,6 +7,7 @@ import { AuthContext } from "../context/Provider";
 import { BiCameraOff } from "react-icons/bi";
 import CameraPicker from "./CameraPicker";
 import "./UpdateInputField.css";
+
 const UpdateInputField = ({
   list,
   setList,
@@ -28,6 +29,30 @@ const UpdateInputField = ({
     temp.splice(index, 1);
     setList(temp);
     setShow(false);
+    app
+      .firestore()
+      .collection(currentUser.uid)
+      .doc("starred")
+      .onSnapshot((snap) => {
+        if (snap.exists) {
+          const data = snap.data().ref;
+          const temp = [];
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].id !== list[index].id) {
+              temp.push(data[i]);
+            }
+          }
+          if (temp.length > 0) {
+            app
+              .firestore()
+              .collection(currentUser.uid)
+              .doc("starred")
+              .set({ ref: temp });
+          } else {
+            app.firestore().collection(currentUser.uid).doc("starred").delete();
+          }
+        }
+      });
     app.storage().ref(`/${currentUser.uid}/${activeDate}/${data.id}`).delete();
     if (temp.length > 0) {
       console.log({ activeDate });

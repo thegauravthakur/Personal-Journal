@@ -46,8 +46,7 @@ export const formatAMPM = (date) => {
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
   minutes = minutes < 10 ? "0" + minutes : minutes;
-  let strTime = hours + ":" + minutes + " " + ampm;
-  return strTime;
+  return hours + ":" + minutes + " " + ampm;
 };
 
 export const isDaySame = (d1, d2) => {

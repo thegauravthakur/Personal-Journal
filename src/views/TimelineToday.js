@@ -21,9 +21,9 @@ const TimelineToday = () => {
   const [loading1, setLoading1] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const dateObj = new Date();
-  const month = dateObj.getUTCMonth() + 1; //months from 1-12
-  const day = dateObj.getUTCDate();
-  const year = dateObj.getUTCFullYear();
+  const month = dateObj.getMonth() + 1; //months from 1-12
+  const day = dateObj.getDate();
+  const year = dateObj.getFullYear();
   const [activeDate, setActiveDate] = useState(`${day}:${month}:${year}`);
   const defaultValue = {
     year: new Date().getFullYear(),

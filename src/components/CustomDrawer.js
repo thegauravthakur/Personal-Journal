@@ -3,6 +3,7 @@ import {
   Avatar,
   Divider,
   Drawer,
+  IconButton,
   List,
   ListItem,
   ListItemIcon,
@@ -15,7 +16,7 @@ import { AiFillSetting } from "react-icons/all";
 import { useHistory } from "react-router-dom";
 import "../styles/index.css";
 import "./CustomDrawer.css";
-
+import { AiFillStar } from "react-icons/ai";
 import { Calendar } from "react-modern-calendar-datepicker";
 const CustomDrawer = ({
   drawer,
@@ -55,6 +56,16 @@ const CustomDrawer = ({
               <Avatar alt={displayName} src={photoURL} />
             </ListItemIcon>
             <ListItemText primary={displayName} secondary={"update profile"} />
+          </ListItem>
+          <ListItem
+            button
+            key={"backup"}
+            onClick={() => history.push("/starred")}
+          >
+            <ListItemIcon>
+              <AiFillStar size={25} />
+            </ListItemIcon>
+            <ListItemText primary={"Starred"} />
           </ListItem>
         </List>
 

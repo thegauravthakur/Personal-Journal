@@ -19,10 +19,6 @@ const AddNewItem = ({ list, setList }) => {
   const [body, setBody] = useState("");
   const [file, setFile] = useState(null);
   const { currentUser } = useContext(AuthContext);
-  const dateObj = new Date();
-  const month = dateObj.getUTCMonth() + 1; //months from 1-12
-  const day = dateObj.getUTCDate();
-  const year = dateObj.getUTCFullYear();
   const onClickHandler = async () => {
     if ((body.length > 0 || title.length > 0) && file) {
       const data = {
@@ -65,7 +61,7 @@ const AddNewItem = ({ list, setList }) => {
             await app
               .firestore()
               .collection(currentUser.uid)
-              .doc(`${day}:${month}:${year}`)
+              .doc(`${getDateInStorageFormat(new Date())}`)
               .set({ data: temp }, { merge: true })
               .then(() => setList(temp));
           });
@@ -86,7 +82,7 @@ const AddNewItem = ({ list, setList }) => {
       await app
         .firestore()
         .collection(currentUser.uid)
-        .doc(`${day}:${month}:${year}`)
+        .doc(`${getDateInStorageFormat(new Date())}`)
         .set({ data: temp }, { merge: true })
         .then(() => setList(temp));
     }

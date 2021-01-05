@@ -21,9 +21,9 @@ function useOutsideAlerter(
   useEffect(() => {
     async function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
-        setTitle("");
-        setFile(null);
-        setBody("");
+        // setTitle("");
+        // setFile(null);
+        // setBody("");
         setShow(false);
       }
     }
