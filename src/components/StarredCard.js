@@ -4,16 +4,12 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
 import { formattedDate } from "../utils/helperFunctions";
-import { MdLaunch } from "react-icons/md";
-import { Icon } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -47,6 +43,13 @@ export default function StarredCard({ title, date, body, index, docName, id }) {
   return (
     <Card className={classes.root}>
       <CardHeader
+        titleTypographyProps={{
+          style: {
+            fontSize: 18,
+            fontFamily: '"Segoe UI", serif',
+            fontWeight: "bolder",
+          },
+        }}
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
             {index}
@@ -72,7 +75,15 @@ export default function StarredCard({ title, date, body, index, docName, id }) {
         />
       ) : null}
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography
+          style={{
+            fontSize: 16,
+            fontFamily: '"Segoe UI", serif',
+          }}
+          variant="body2"
+          color="textSecondary"
+          component="p"
+        >
           {body}
         </Typography>
       </CardContent>
