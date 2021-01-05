@@ -3,7 +3,7 @@ import SettingAppbar from "../components/SettingAppbar";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
 import StarredCard from "../components/StarredCard";
-import { Container, Grid, useMediaQuery } from "@material-ui/core";
+import { Container, Grid, Typography, useMediaQuery } from "@material-ui/core";
 
 const StarredView = () => {
   const matches = useMediaQuery("(min-width:900px)");
@@ -54,7 +54,7 @@ const StarredView = () => {
         maxWidth={"lg"}
         style={{
           columnGap: 20,
-          display: "grid",
+          display: data.length > 0 ? "grid" : "block",
           gridTemplateColumns: !matches2
             ? "repeat(1, minmax(0, 1fr))"
             : matches
@@ -64,17 +64,21 @@ const StarredView = () => {
           marginTop: 50,
         }}
       >
-        {data.map((d, i) => (
-          <StarredCard
-            key={d.id}
-            id={d.id}
-            title={d.title}
-            body={d.body}
-            index={i + 1}
-            date={d.writtenAt}
-            docName={d.docName}
-          />
-        ))}
+        {data.length > 0 ? (
+          data.map((d, i) => (
+            <StarredCard
+              key={d.id}
+              id={d.id}
+              title={d.title}
+              body={d.body}
+              index={i + 1}
+              date={d.writtenAt}
+              docName={d.docName}
+            />
+          ))
+        ) : (
+          <Typography align={"center"}>You haven't starred any item</Typography>
+        )}
       </Container>
     </div>
   );

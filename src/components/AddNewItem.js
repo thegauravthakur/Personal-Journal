@@ -12,6 +12,7 @@ import CustomInputField from "./CustomInputField";
 import OutsideAlerter from "./OutsideAlerter";
 import { v4 as uuidv4 } from "uuid";
 import { getDateInStorageFormat, resizeFile } from "../utils/helperFunctions";
+import CustomSnackBar from "./CustomSnackBar";
 
 const AddNewItem = ({ list, setList }) => {
   const [progress, setProgress] = useState(null);
@@ -19,6 +20,11 @@ const AddNewItem = ({ list, setList }) => {
   const [body, setBody] = useState("");
   const [file, setFile] = useState(null);
   const { currentUser } = useContext(AuthContext);
+  const [showSnack, setShowSnack] = useState({
+    active: false,
+    type: "success",
+    message: "",
+  });
   const onClickHandler = async () => {
     if ((body.length > 0 || title.length > 0) && file) {
       const data = {
@@ -58,6 +64,12 @@ const AddNewItem = ({ list, setList }) => {
             setBody("");
             setShow(false);
             setFile(null);
+            setShowSnack({
+              ...showSnack,
+              active: true,
+              message: "Item Added!",
+              type: "success",
+            });
             await app
               .firestore()
               .collection(currentUser.uid)
@@ -79,6 +91,12 @@ const AddNewItem = ({ list, setList }) => {
       setTitle("");
       setBody("");
       setShow(false);
+      setShowSnack({
+        ...showSnack,
+        active: true,
+        message: "Item Added!",
+        type: "success",
+      });
       await app
         .firestore()
         .collection(currentUser.uid)
@@ -140,6 +158,12 @@ const AddNewItem = ({ list, setList }) => {
           />
         </TimelineContent>
       </TimelineItem>
+      <CustomSnackBar
+        type={showSnack.type}
+        message={showSnack.message}
+        open={showSnack.active}
+        setOpen={setShowSnack}
+      />
     </OutsideAlerter>
   );
 };

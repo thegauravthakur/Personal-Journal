@@ -8,6 +8,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from "@material-ui/core";
 // import { MdBackup } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
@@ -17,7 +18,7 @@ import { useHistory } from "react-router-dom";
 import "../styles/index.css";
 import "./CustomDrawer.css";
 import { AiFillStar } from "react-icons/ai";
-import { Calendar } from "react-modern-calendar-datepicker";
+import { MdSystemUpdateAlt } from "react-icons/md";
 const CustomDrawer = ({
   drawer,
   setDrawer,
@@ -78,7 +79,10 @@ const CustomDrawer = ({
             <ListItemIcon>
               <AiFillSetting size={25} />
             </ListItemIcon>
-            <ListItemText primary={"Settings"} />
+            <ListItemText
+              secondary={"last updated at 5 Jan, 2020"}
+              primary={"Settings"}
+            />
           </ListItem>
           <Divider />
           <ListItem button key={"logout"} onClick={() => app.auth().signOut()}>

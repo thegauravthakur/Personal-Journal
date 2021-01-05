@@ -21,6 +21,7 @@ import { AuthContext } from "../context/Provider";
 import OutsideAlerterUpdate from "./OutsideAlerterUpdate";
 import { formatAMPM, isDaySame, resizeFile } from "../utils/helperFunctions";
 import { AiFillSetting } from "react-icons/all";
+import CustomSnackBar from "./CustomSnackBar";
 
 const CustomTimelineItem = ({
   isLast,
@@ -42,6 +43,11 @@ const CustomTimelineItem = ({
   const [updateBody, setUpdateBody] = useState(list[index].body);
   const [progress, setProgress] = useState(null);
   const [starredList, setStarredList] = useState([]);
+  const [showSnack, setShowSnack] = useState({
+    active: false,
+    type: "success",
+    message: "",
+  });
   useEffect(() => {
     app
       .firestore()
@@ -246,6 +252,12 @@ const CustomTimelineItem = ({
                         .collection(currentUser.uid)
                         .doc("starred")
                         .set({ ref: temp });
+                      setShowSnack({
+                        ...showSnack,
+                        active: true,
+                        message: "Item Un-Starred!",
+                        type: "success",
+                      });
                     }}
                     style={{
                       alignSelf: "flex-end",
@@ -270,6 +282,12 @@ const CustomTimelineItem = ({
                           },
                           { merge: true }
                         );
+                      setShowSnack({
+                        ...showSnack,
+                        active: true,
+                        message: "Item Starred!",
+                        type: "success",
+                      });
                     }}
                     style={{
                       alignSelf: "flex-end",
@@ -283,6 +301,12 @@ const CustomTimelineItem = ({
           )}
         </TimelineItem>
       </OutsideAlerterUpdate>
+      <CustomSnackBar
+        type={showSnack.type}
+        message={showSnack.message}
+        open={showSnack.active}
+        setOpen={setShowSnack}
+      />
     </div>
   );
 };
