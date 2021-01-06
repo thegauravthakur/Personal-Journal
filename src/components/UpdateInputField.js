@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { Grid, IconButton, useMediaQuery } from "@material-ui/core";
 import { MdDelete } from "react-icons/md";
@@ -7,6 +7,7 @@ import { AuthContext } from "../context/Provider";
 import { BiCameraOff } from "react-icons/bi";
 import CameraPicker from "./CameraPicker";
 import "./UpdateInputField.css";
+import CustomSnackBar from "./CustomSnackBar";
 
 const UpdateInputField = ({
   list,
@@ -20,6 +21,8 @@ const UpdateInputField = ({
   setFile,
   url,
   setUrl,
+  showSnack,
+  setShowSnack,
 }) => {
   const matches = useMediaQuery("(min-width:500px)");
   const { currentUser } = useContext(AuthContext);
@@ -27,6 +30,12 @@ const UpdateInputField = ({
     const temp = [...list];
     const data = temp[index];
     temp.splice(index, 1);
+    setShowSnack({
+      ...showSnack,
+      active: true,
+      message: "Item Deleted!",
+      type: "success",
+    });
     setList(temp);
     setShow(false);
     app

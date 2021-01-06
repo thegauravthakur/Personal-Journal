@@ -27,7 +27,10 @@ const CustomInputField = ({
       <div>
         <TextareaAutosize
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => {
+            localStorage.setItem("title", e.target.value);
+            setTitle(e.target.value);
+          }}
           className={"title"}
           style={{
             fontSize: 18,
@@ -41,7 +44,10 @@ const CustomInputField = ({
           style={{ fontSize: 16 }}
           rowsMax={7}
           value={show ? body : ""}
-          onChange={(e) => setBody(e.target.value)}
+          onChange={(e) => {
+            setBody(e.target.value);
+            localStorage.setItem("body", e.target.value);
+          }}
           onFocus={() => {
             setShow(true);
           }}

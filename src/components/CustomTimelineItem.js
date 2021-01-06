@@ -179,6 +179,8 @@ const CustomTimelineItem = ({
                 />
               ) : null}
               <UpdateInputField
+                setShowSnack={setShowSnack}
+                showSnack={showSnack}
                 setUrl={setUrl}
                 url={url}
                 setFile={setFile}
@@ -255,7 +257,7 @@ const CustomTimelineItem = ({
                       setShowSnack({
                         ...showSnack,
                         active: true,
-                        message: "Item Un-Starred!",
+                        message: "Event Un-Starred!",
                         type: "success",
                       });
                     }}
@@ -285,7 +287,7 @@ const CustomTimelineItem = ({
                       setShowSnack({
                         ...showSnack,
                         active: true,
-                        message: "Item Starred!",
+                        message: "Event Starred!",
                         type: "success",
                       });
                     }}

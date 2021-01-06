@@ -1,16 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Avatar,
   Divider,
   Drawer,
-  IconButton,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Typography,
 } from "@material-ui/core";
-// import { MdBackup } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
 import app from "../api/firebase";
 import { AiFillSetting } from "react-icons/all";
@@ -18,7 +15,6 @@ import { useHistory } from "react-router-dom";
 import "../styles/index.css";
 import "./CustomDrawer.css";
 import { AiFillStar } from "react-icons/ai";
-import { MdSystemUpdateAlt } from "react-icons/md";
 const CustomDrawer = ({
   drawer,
   setDrawer,
@@ -58,6 +54,7 @@ const CustomDrawer = ({
             </ListItemIcon>
             <ListItemText primary={displayName} secondary={"update profile"} />
           </ListItem>
+          <Divider />
           <ListItem
             button
             key={"backup"}
@@ -66,7 +63,7 @@ const CustomDrawer = ({
             <ListItemIcon>
               <AiFillStar size={25} />
             </ListItemIcon>
-            <ListItemText primary={"Starred"} />
+            <ListItemText primary={"Starred Events"} />
           </ListItem>
         </List>
 
@@ -85,6 +82,13 @@ const CustomDrawer = ({
             />
           </ListItem>
           <Divider />
+          {/*<ListItem button key={"contact"} onClick={() => {}}>*/}
+          {/*  <ListItemIcon>*/}
+          {/*    <SiAboutDotMe size={25} />*/}
+          {/*  </ListItemIcon>*/}
+          {/*  <ListItemText primary={"Contact Us"} />*/}
+          {/*</ListItem>*/}
+          {/*<Divider />*/}
           <ListItem button key={"logout"} onClick={() => app.auth().signOut()}>
             <ListItemIcon>
               <BiLogOut size={25} />

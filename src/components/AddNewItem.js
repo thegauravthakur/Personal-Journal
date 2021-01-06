@@ -16,8 +16,8 @@ import CustomSnackBar from "./CustomSnackBar";
 
 const AddNewItem = ({ list, setList }) => {
   const [progress, setProgress] = useState(null);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const [title, setTitle] = useState(localStorage.title || "");
+  const [body, setBody] = useState(localStorage.body || "");
   const [file, setFile] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const [showSnack, setShowSnack] = useState({
@@ -61,6 +61,8 @@ const AddNewItem = ({ list, setList }) => {
             const temp = [...list];
             temp.unshift(data);
             setTitle("");
+            localStorage.setItem("title", "");
+            localStorage.setItem("body", "");
             setBody("");
             setShow(false);
             setFile(null);
@@ -88,6 +90,8 @@ const AddNewItem = ({ list, setList }) => {
       setProgress(null);
       const temp = [...list];
       temp.unshift(data);
+      localStorage.setItem("title", "");
+      localStorage.setItem("body", "");
       setTitle("");
       setBody("");
       setShow(false);
