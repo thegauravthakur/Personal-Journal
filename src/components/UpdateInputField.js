@@ -63,16 +63,11 @@ const UpdateInputField = ({
         }
       });
     app.storage().ref(`/${currentUser.uid}/${activeDate}/${data.id}`).delete();
-    if (temp.length > 0) {
-      console.log({ activeDate });
-      app
-        .firestore()
-        .collection(currentUser.uid)
-        .doc(activeDate)
-        .set({ data: temp }, { merge: true });
-    } else {
-      app.firestore().collection(currentUser.uid).doc(activeDate).delete();
-    }
+    app
+      .firestore()
+      .collection(currentUser.uid)
+      .doc(activeDate)
+      .set({ data: temp }, { merge: true });
   };
   return (
     <div

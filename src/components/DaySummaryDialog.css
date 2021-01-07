@@ -1,0 +1,14 @@
+.textarea {
+   font-size: 15px;
+   font-weight: normal;
+
+}
+.textarea:focus {
+   outline: none;
+}
+
+/*width: "100%",*/
+/*resize: "none",*/
+/*paddingTop: 5,*/
+/*paddingBottom: 5,*/
+/*border: "none",*/

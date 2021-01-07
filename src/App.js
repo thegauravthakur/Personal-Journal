@@ -16,7 +16,7 @@ function App() {
       <ProtectedRoute exact path="/edit-profile" component={EditProfile} />
       <ProtectedRoute exact path="/starred" component={StarredView} />
       <ProtectedRoute path={"/playground"} component={Playground} exact />
-      <ProtectedRoute component={TimelineToday} exact />
+      <ProtectedRoute path={"/"} component={TimelineToday} exact />
     </Switch>
   );
 }

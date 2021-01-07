@@ -116,8 +116,8 @@ const CustomTimelineItem = ({
   };
 
   useEffect(() => {
+    console.log("image useEffect running");
     const doStuff = () => {
-      console.log({ activeDate });
       app
         .storage()
         .ref(`/${currentUser.uid}/${activeDate}/${id}`)
@@ -127,7 +127,6 @@ const CustomTimelineItem = ({
         })
         .catch((e) => {
           setUrl(null);
-          console.log("big error bro");
         });
     };
     doStuff();
@@ -209,7 +208,11 @@ const CustomTimelineItem = ({
                 {title}
               </Typography>
               <Typography
-                style={{ marginBottom: 10, fontFamily: '"Segoe UI", serif' }}
+                style={{
+                  marginBottom: 10,
+                  fontFamily: '"Segoe UI", serif',
+                  userSelect: "none",
+                }}
               >
                 {body}
               </Typography>
@@ -232,7 +235,7 @@ const CustomTimelineItem = ({
                 />
               ) : // <CardMedia image={url} style={{ paddingTop: "56.25%" }} />
               null}
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", userSelect: "none" }}>
                 {isDaySame(new Date(), new Date(parseInt(writtenAt))) ? (
                   <TimeAgo
                     style={{ fontFamily: '"Segoe UI", serif' }}

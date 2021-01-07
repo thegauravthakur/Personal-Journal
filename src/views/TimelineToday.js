@@ -1,6 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import Timeline from "@material-ui/lab/Timeline";
-import { CircularProgress, Grid, Paper, Typography } from "@material-ui/core";
+import {
+  Button,
+  CircularProgress,
+  Divider,
+  Grid,
+  ListItem,
+  ListItemText,
+  Paper,
+  Typography,
+} from "@material-ui/core";
 import CustomAppbar from "../components/CustomAppbar";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
@@ -12,8 +21,13 @@ import CustomTimelineItem from "../components/CustomTimelineItem";
 import CustomDrawer from "../components/CustomDrawer";
 import SimpleDialog from "../components/SimpleDialog";
 import "../components/TimelineToday.css";
+import DaySummaryDialog from "../components/DaySummryDialog";
+import { Skeleton } from "@material-ui/lab";
 
 const TimelineToday = () => {
+  const [daySummary, setDaySummary] = useState(null);
+  const [summaryLoading, setSummaryLoading] = useState(null);
+  const [summaryDialog, setSummaryDialog] = useState(false);
   const [list, setList] = useState([]);
   const [activeImage, setActiveImage] = useState(null);
   const [dialog, setDialog] = useState(false);
@@ -62,6 +76,23 @@ const TimelineToday = () => {
     });
   }, [list]);
 
+  useEffect(() => {
+    setSummaryLoading(true);
+    app
+      .firestore()
+      .collection(currentUser.uid)
+      .doc(activeDate)
+      .onSnapshot((snap) => {
+        if (snap.exists) {
+          setDaySummary(snap.data().daySummary);
+          setSummaryLoading(false);
+        } else {
+          setDaySummary(null);
+          setSummaryLoading(false);
+        }
+      });
+  }, [daySummary, selectedDay]);
+
   return (
     <Paper className="wrapper">
       <CustomAppbar
@@ -79,7 +110,7 @@ const TimelineToday = () => {
                 fontWeight: "bolder",
                 color: "#334155",
                 marginTop: 30,
-                marginBottom: 20,
+                marginBottom: 15,
                 fontFamily: "'Segoe UI', serif",
               }}
               className="header"
@@ -93,6 +124,67 @@ const TimelineToday = () => {
                 )
               )}
             </Typography>
+          </Grid>
+          <Grid item>
+            <Divider />
+            <div className="daily-summary-wrapper">
+              <Typography
+                style={{
+                  paddingBottom: 15,
+                  paddingTop: 15,
+                  minWidth: "100%",
+                  cursor: "pointer",
+                  color: "#78716C",
+                }}
+                component={"button"}
+                onClick={() => setSummaryDialog(true)}
+                className="daily-summary-wrapper-text"
+              >
+                {!summaryLoading ? (
+                  daySummary ? (
+                    daySummary
+                  ) : isDaySame(
+                      new Date(),
+                      new Date(
+                        selectedDay.year,
+                        selectedDay.month - 1,
+                        selectedDay.day
+                      )
+                    ) ? (
+                    "So, How was your day? Click here to add your day summary."
+                  ) : (
+                    "Do you remember what happened on that day?"
+                  )
+                ) : (
+                  <>
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                  </>
+                )}
+                {/*{!daySummary &&*/}
+                {/*isDaySame(*/}
+                {/*  new Date(),*/}
+                {/*  new Date(*/}
+                {/*    selectedDay.year,*/}
+                {/*    selectedDay.month - 1,*/}
+                {/*    selectedDay.year*/}
+                {/*  )*/}
+                {/*)*/}
+                {/*  ? "So, How was your day? Click here to add your day summary."*/}
+                {/*  : !isDaySame(*/}
+                {/*      new Date(),*/}
+                {/*      new Date(*/}
+                {/*        selectedDay.year,*/}
+                {/*        selectedDay.month - 1,*/}
+                {/*        selectedDay.day*/}
+                {/*      )*/}
+                {/*    ) */}
+                {/*  ? "Do you remember what happened on that day?"*/}
+                {/*  : daySummary}*/}
+              </Typography>
+            </div>
+            <Divider style={{ marginBottom: 30 }} />
           </Grid>
           <Grid item>
             <Timeline align="left" style={{ padding: 0, margin: 0 }}>
@@ -156,6 +248,13 @@ const TimelineToday = () => {
         activeImage={activeImage}
         dialog={dialog}
         setDialog={setDialog}
+      />
+      <DaySummaryDialog
+        daySummary={daySummary}
+        setDaySummary={setDaySummary}
+        activeDate={activeDate}
+        setDialog={setSummaryDialog}
+        dialog={summaryDialog}
       />
     </Paper>
   );
