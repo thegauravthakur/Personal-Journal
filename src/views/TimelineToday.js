@@ -13,7 +13,12 @@ import {
 import CustomAppbar from "../components/CustomAppbar";
 import app from "../api/firebase";
 import { AuthContext } from "../context/Provider";
-import { formattedDate, isDaySame } from "../utils/helperFunctions";
+import {
+  checkIfDayIsGreater,
+  formattedDate,
+  isDaySame,
+  validTime,
+} from "../utils/helperFunctions";
 import { Calendar } from "react-modern-calendar-datepicker";
 import "../styles/calendar.css";
 import AddNewItem from "../components/AddNewItem";
@@ -38,6 +43,7 @@ const TimelineToday = () => {
   const month = dateObj.getMonth() + 1; //months from 1-12
   const day = dateObj.getDate();
   const year = dateObj.getFullYear();
+  const triggerDate = new Date(`${day}/${month}/${year} 9:57:00 AM`);
   const [activeDate, setActiveDate] = useState(`${day}:${month}:${year}`);
   const defaultValue = {
     year: new Date().getFullYear(),
@@ -125,67 +131,79 @@ const TimelineToday = () => {
               )}
             </Typography>
           </Grid>
-          <Grid item>
-            <Divider />
-            <div className="daily-summary-wrapper">
-              <Typography
-                style={{
-                  paddingBottom: 15,
-                  paddingTop: 15,
-                  minWidth: "100%",
-                  cursor: "pointer",
-                  color: "#78716C",
-                }}
-                component={"button"}
-                onClick={() => setSummaryDialog(true)}
-                className="daily-summary-wrapper-text"
-              >
-                {!summaryLoading ? (
-                  daySummary ? (
-                    daySummary
-                  ) : isDaySame(
-                      new Date(),
-                      new Date(
-                        selectedDay.year,
-                        selectedDay.month - 1,
-                        selectedDay.day
+          {!checkIfDayIsGreater(
+            selectedDay.day,
+            selectedDay.month,
+            selectedDay.year
+          ) ? (
+            validTime() ||
+            !isDaySame(
+              new Date(),
+              new Date(selectedDay.year, selectedDay.month - 1, selectedDay.day)
+            ) ? (
+              <Grid item>
+                <Divider />
+                <div className="daily-summary-wrapper">
+                  <Typography
+                    style={{
+                      paddingBottom: 15,
+                      paddingTop: 15,
+                      minWidth: "100%",
+                      cursor: "pointer",
+                      color: "#78716C",
+                    }}
+                    component={"button"}
+                    onClick={() => setSummaryDialog(true)}
+                    className="daily-summary-wrapper-text"
+                  >
+                    {!summaryLoading ? (
+                      daySummary ? (
+                        daySummary
+                      ) : isDaySame(
+                          new Date(),
+                          new Date(
+                            selectedDay.year,
+                            selectedDay.month - 1,
+                            selectedDay.day
+                          )
+                        ) ? (
+                        "So, How was your day? Click here to add your day summary."
+                      ) : (
+                        "Do you remember what happened on that day?"
                       )
-                    ) ? (
-                    "So, How was your day? Click here to add your day summary."
-                  ) : (
-                    "Do you remember what happened on that day?"
-                  )
-                ) : (
-                  <>
-                    <Skeleton />
-                    <Skeleton />
-                    <Skeleton />
-                  </>
-                )}
-                {/*{!daySummary &&*/}
-                {/*isDaySame(*/}
-                {/*  new Date(),*/}
-                {/*  new Date(*/}
-                {/*    selectedDay.year,*/}
-                {/*    selectedDay.month - 1,*/}
-                {/*    selectedDay.year*/}
-                {/*  )*/}
-                {/*)*/}
-                {/*  ? "So, How was your day? Click here to add your day summary."*/}
-                {/*  : !isDaySame(*/}
-                {/*      new Date(),*/}
-                {/*      new Date(*/}
-                {/*        selectedDay.year,*/}
-                {/*        selectedDay.month - 1,*/}
-                {/*        selectedDay.day*/}
-                {/*      )*/}
-                {/*    ) */}
-                {/*  ? "Do you remember what happened on that day?"*/}
-                {/*  : daySummary}*/}
-              </Typography>
-            </div>
-            <Divider style={{ marginBottom: 30 }} />
-          </Grid>
+                    ) : (
+                      <>
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                      </>
+                    )}
+                    {/*{!daySummary &&*/}
+                    {/*isDaySame(*/}
+                    {/*  new Date(),*/}
+                    {/*  new Date(*/}
+                    {/*    selectedDay.year,*/}
+                    {/*    selectedDay.month - 1,*/}
+                    {/*    selectedDay.year*/}
+                    {/*  )*/}
+                    {/*)*/}
+                    {/*  ? "So, How was your day? Click here to add your day summary."*/}
+                    {/*  : !isDaySame(*/}
+                    {/*      new Date(),*/}
+                    {/*      new Date(*/}
+                    {/*        selectedDay.year,*/}
+                    {/*        selectedDay.month - 1,*/}
+                    {/*        selectedDay.day*/}
+                    {/*      )*/}
+                    {/*    ) */}
+                    {/*  ? "Do you remember what happened on that day?"*/}
+                    {/*  : daySummary}*/}
+                  </Typography>
+                </div>
+                <Divider style={{ marginBottom: 30 }} />
+              </Grid>
+            ) : null
+          ) : null}
           <Grid item>
             <Timeline align="left" style={{ padding: 0, margin: 0 }}>
               {isDaySame(
