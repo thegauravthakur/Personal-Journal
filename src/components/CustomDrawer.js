@@ -15,6 +15,7 @@ import { useHistory } from "react-router-dom";
 import "../styles/index.css";
 import "./CustomDrawer.css";
 import { AiFillStar } from "react-icons/ai";
+import { MdUpdate } from "react-icons/md";
 const CustomDrawer = ({
   drawer,
   setDrawer,
@@ -76,19 +77,22 @@ const CustomDrawer = ({
             <ListItemIcon>
               <AiFillSetting size={25} />
             </ListItemIcon>
-            <ListItemText
-              secondary={"last updated at 5 Jan, 2020"}
-              primary={"Settings"}
-            />
+            <ListItemText primary={"Settings"} />
           </ListItem>
           <Divider />
-          {/*<ListItem button key={"contact"} onClick={() => {}}>*/}
-          {/*  <ListItemIcon>*/}
-          {/*    <SiAboutDotMe size={25} />*/}
-          {/*  </ListItemIcon>*/}
-          {/*  <ListItemText primary={"Contact Us"} />*/}
-          {/*</ListItem>*/}
-          {/*<Divider />*/}
+          <ListItem
+            button
+            key={"contact"}
+            onClick={() => {
+              history.push("/changelog");
+            }}
+          >
+            <ListItemIcon>
+              <MdUpdate size={25} />
+            </ListItemIcon>
+            <ListItemText primary={"Changelog"} />
+          </ListItem>
+          <Divider />
           <ListItem button key={"logout"} onClick={() => app.auth().signOut()}>
             <ListItemIcon>
               <BiLogOut size={25} />

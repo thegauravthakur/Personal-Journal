@@ -35,6 +35,7 @@ const CustomAppbar = ({
         </IconButton>
         <Typography
           style={{
+            fontWeight: "bolder",
             flexGrow: 1,
             color: "#034b4b",
             fontFamily: '"Segoe UI", serif',

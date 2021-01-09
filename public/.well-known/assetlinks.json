@@ -1,10 +1,12 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "in.gauravthakur.journal.twa",
-    "sha256_cert_fingerprints": [
-      "1E:55:39:64:34:6F:3C:7E:74:BB:57:78:B7:DC:C3:6A:99:C1:FE:19:06:46:BC:B3:16:33:1B:D7:7A:CA:79:97"
-    ]
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "in.gauravthakur.journal.twa",
+      "sha256_cert_fingerprints": [
+        "1E:55:39:64:34:6F:3C:7E:74:BB:57:78:B7:DC:C3:6A:99:C1:FE:19:06:46:BC:B3:16:33:1B:D7:7A:CA:79:97"
+      ]
+    }
   }
-}]
+]
