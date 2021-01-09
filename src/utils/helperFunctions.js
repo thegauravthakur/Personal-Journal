@@ -122,9 +122,19 @@ export const validTime = () => {
   return startDate < currentDate && endDate > currentDate;
 };
 
-export const checkIfDayIsGreater = (day, month, year) => {
-  let GivenDate = `${year}-${month}-${day}`;
-  const CurrentDate = new Date();
-  GivenDate = new Date(GivenDate);
-  return GivenDate > CurrentDate;
+export const checkIfDayIsGreater = (day, month, year, datesId) => {
+  let check = false;
+  for (let i = 0; i < datesId.length; i++) {
+    if (
+      datesId[i].day === day &&
+      datesId[i].month === month &&
+      datesId[i].year === year
+    )
+      check = true;
+  }
+  return check;
+  // let GivenDate = `${year}-${month}-${day}`;
+  // const CurrentDate = new Date();
+  // GivenDate = new Date(GivenDate);
+  // return check && GivenDate > CurrentDate;
 };

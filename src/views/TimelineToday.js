@@ -131,10 +131,11 @@ const TimelineToday = () => {
               )}
             </Typography>
           </Grid>
-          {!checkIfDayIsGreater(
+          {checkIfDayIsGreater(
             selectedDay.day,
             selectedDay.month,
-            selectedDay.year
+            selectedDay.year,
+            datesId
           ) ? (
             validTime() ||
             !isDaySame(
