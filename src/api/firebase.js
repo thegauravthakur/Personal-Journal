@@ -13,8 +13,10 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 const app = firebase.default.initializeApp(firebaseConfig);
+app.firestore().enablePersistence();
 const GoogleProvider = new firebase.default.auth.GoogleAuthProvider();
 GoogleProvider.setCustomParameters({ prompt: "select_account" });
+
 export const signInWithGoogle = (setLoading) => {
   setLoading(true);
   app
