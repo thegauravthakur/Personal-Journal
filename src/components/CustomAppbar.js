@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import app from "../api/firebase";
 import { GiHamburgerMenu } from "react-icons/gi";
-import DatePicker from "react-modern-calendar-datepicker";
+import DatePicker from "@hassanmojab/react-modern-calendar-datepicker";
 import { BsCalendar } from "react-icons/bs";
 
 const CustomAppbar = ({

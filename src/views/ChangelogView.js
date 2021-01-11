@@ -26,15 +26,13 @@ const ChangelogView = () => {
         <List
           subheader={
             <ListSubheader component="div" id="nested-list-subheader">
-              Last updated at 9th Jan, 2020
+              Last updated at 11th Jan, 2020
             </ListSubheader>
           }
           style={{}}
         >
           <ListItem button key={"setting"}>
-            <ListItemText
-              primary={"Now the application can work without internet."}
-            />
+            <ListItemText primary={"Solved some bugs"} />
           </ListItem>
           <Divider />
           <ListItem button key={"contact"}>

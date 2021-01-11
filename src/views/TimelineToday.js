@@ -19,7 +19,7 @@ import {
   isDaySame,
   validTime,
 } from "../utils/helperFunctions";
-import { Calendar } from "react-modern-calendar-datepicker";
+import { Calendar } from "@hassanmojab/react-modern-calendar-datepicker";
 import "../styles/calendar.css";
 import AddNewItem from "../components/AddNewItem";
 import CustomTimelineItem from "../components/CustomTimelineItem";
