@@ -1,9 +1,5 @@
-import React, { useContext, useEffect, useRef } from "react";
-import app from "../api/firebase";
+import React, { useEffect, useRef } from "react";
 
-/**
- * Hook that alerts clicks outside of the passed ref
- */
 function useOutsideAlerter(
   ref,
   title,
