@@ -11,7 +11,7 @@ import app from "../api/firebase";
 import { BiArrowBack } from "react-icons/bi";
 import { useHistory } from "react-router-dom";
 
-const CustomAppbar = ({ title }) => {
+const CustomAppbar = ({ title, positon }) => {
   const history = useHistory();
   const useStyles = makeStyles({
     btn: {
@@ -24,7 +24,10 @@ const CustomAppbar = ({ title }) => {
   });
   const classes = useStyles();
   return (
-    <AppBar style={{ backgroundColor: "#f5f4f4" }} position="relative">
+    <AppBar
+      style={{ backgroundColor: "#f5f4f4" }}
+      position={positon ? positon : "relative"}
+    >
       <Toolbar>
         <IconButton
           onClick={() => history.push("/")}

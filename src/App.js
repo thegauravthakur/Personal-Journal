@@ -8,6 +8,7 @@ import EditProfile from "./views/EditProfile";
 import Playground from "./views/Playground";
 import StarredView from "./views/StarredView";
 import ChangelogView from "./views/ChangelogView";
+import ContactUsView from "./views/ContactUsView";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <ProtectedRoute exact path="/starred" component={StarredView} />
       <ProtectedRoute path={"/playground"} component={Playground} exact />
       <ProtectedRoute path={"/changelog"} component={ChangelogView} exact />
+      <ProtectedRoute path={"/contact"} component={ContactUsView} exact />
       <ProtectedRoute path={"/"} component={TimelineToday} exact />
     </Switch>
   );

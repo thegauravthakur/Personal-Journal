@@ -16,6 +16,7 @@ import "../styles/index.css";
 import "./CustomDrawer.css";
 import { AiFillStar } from "react-icons/ai";
 import { MdUpdate } from "react-icons/md";
+import { HiOutlineMailOpen } from "react-icons/hi";
 const CustomDrawer = ({
   drawer,
   setDrawer,
@@ -47,7 +48,7 @@ const CustomDrawer = ({
         <List style={{ minWidth: 250 }}>
           <ListItem
             button
-            key={"backup"}
+            key={"edit-profile"}
             onClick={() => history.push("/edit-profile")}
           >
             <ListItemIcon onClick={() => console.log(app.auth().currentUser)}>
@@ -80,17 +81,30 @@ const CustomDrawer = ({
             <ListItemText primary={"Settings"} />
           </ListItem>
           <Divider />
+          {/*<ListItem*/}
+          {/*  button*/}
+          {/*  key={"changelog"}*/}
+          {/*  onClick={() => {*/}
+          {/*    history.push("/changelog");*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  <ListItemIcon>*/}
+          {/*    <MdUpdate size={25} />*/}
+          {/*  </ListItemIcon>*/}
+          {/*  <ListItemText primary={"Changelog"} />*/}
+          {/*</ListItem>*/}
+          {/*<Divider />*/}
           <ListItem
             button
             key={"contact"}
             onClick={() => {
-              history.push("/changelog");
+              history.push("/contact");
             }}
           >
             <ListItemIcon>
-              <MdUpdate size={25} />
+              <HiOutlineMailOpen size={25} />
             </ListItemIcon>
-            <ListItemText primary={"Changelog"} />
+            <ListItemText primary={"Contact Us"} />
           </ListItem>
           <Divider />
           <ListItem button key={"logout"} onClick={() => app.auth().signOut()}>

@@ -43,7 +43,6 @@ const TimelineToday = () => {
   const month = dateObj.getMonth() + 1; //months from 1-12
   const day = dateObj.getDate();
   const year = dateObj.getFullYear();
-  const triggerDate = new Date(`${day}/${month}/${year} 9:57:00 AM`);
   const [activeDate, setActiveDate] = useState(`${day}:${month}:${year}`);
   const defaultValue = {
     year: new Date().getFullYear(),
