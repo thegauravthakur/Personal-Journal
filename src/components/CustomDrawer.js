@@ -17,14 +17,7 @@ import "./CustomDrawer.css";
 import { AiFillStar } from "react-icons/ai";
 import { MdUpdate } from "react-icons/md";
 import { HiOutlineMailOpen } from "react-icons/hi";
-const CustomDrawer = ({
-  drawer,
-  setDrawer,
-  datesId,
-  selectedDay,
-  setActiveDate,
-  setSelectedDay,
-}) => {
+const CustomDrawer = ({ drawer, setDrawer }) => {
   const history = useHistory();
   const { photoURL, displayName } = app.auth().currentUser;
 

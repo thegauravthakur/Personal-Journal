@@ -9,20 +9,8 @@ import Playground from "./views/Playground";
 import StarredView from "./views/StarredView";
 import ChangelogView from "./views/ChangelogView";
 import ContactUsView from "./views/ContactUsView";
-import app from "./api/firebase";
 
 function App() {
-  React.useEffect(() => {
-    const msg = app.messaging();
-    msg
-      .requestPermission()
-      .then(() => {
-        return msg.getToken();
-      })
-      .then((data) => {
-        console.warn("token", data);
-      });
-  });
   return (
     <Switch>
       <Route exact path="/login" component={LoginScreen} />
