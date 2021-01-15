@@ -44,6 +44,19 @@ const ContactUsView = () => {
             onClick={() =>
               window.open("https://linkedin.com/in/gauravcodes/", "_blank")
             }
+            // onClick={() => {
+            //   const timestamp = new Date().getTime() + 5 * 1000;
+            //   if ("showTrigger" in Notification.prototype) {
+            //     navigator.serviceWorker.getRegistration().then(function (reg) {
+            //       reg.showNotification("Hello world!", {
+            //         body: "hello wrold",
+            //         badge: "/favicon-32x32.png",
+            //         // eslint-disable-next-line no-undef
+            //         showTrigger: new TimestampTrigger(timestamp),
+            //       });
+            //     });
+            //   }
+            // }}
             startIcon={<IoLogoLinkedin />}
             fullWidth
             variant="outlined"

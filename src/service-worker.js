@@ -70,9 +70,4 @@ self.addEventListener("message", (event) => {
   }
 });
 
-self.addEventListener("notificationclick", function (event) {
-  event.notification.close();
-  event.waitUntil(self.clients.openWindow("/"));
-});
-
 // Any other custom service worker logic can go here.

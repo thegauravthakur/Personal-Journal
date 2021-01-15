@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import TimelineToday from "./views/TimelineToday";
@@ -9,8 +9,15 @@ import Playground from "./views/Playground";
 import StarredView from "./views/StarredView";
 import ChangelogView from "./views/ChangelogView";
 import ContactUsView from "./views/ContactUsView";
+import app from "./api/firebase";
 
 function App() {
+  useEffect(() => {
+    app
+      .messaging()
+      .getToken()
+      .then((token) => console.log(token));
+  });
   return (
     <Switch>
       <Route exact path="/login" component={LoginScreen} />
