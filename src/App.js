@@ -13,10 +13,7 @@ import ContactUsView from "./views/ContactUsView";
 function App() {
   useEffect(() => {
     const permission = Notification.permission;
-    if (
-      permission !== "granted" ||
-      !document.referrer.includes("android-app://in.gauravthakur.journal.twa")
-    ) {
+    if (permission !== "granted") {
       Notification.requestPermission().then((result) => console.log(result));
     }
   });
