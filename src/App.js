@@ -9,14 +9,16 @@ import Playground from "./views/Playground";
 import StarredView from "./views/StarredView";
 import ChangelogView from "./views/ChangelogView";
 import ContactUsView from "./views/ContactUsView";
-import app from "./api/firebase";
 
 function App() {
   useEffect(() => {
-    app
-      .messaging()
-      .getToken()
-      .then((token) => console.log(token));
+    const permission = Notification.permission;
+    if (
+      permission !== "granted" ||
+      !document.referrer.includes("android-app://in.gauravthakur.journal.twa")
+    ) {
+      Notification.requestPermission().then((result) => console.log(result));
+    }
   });
   return (
     <Switch>
