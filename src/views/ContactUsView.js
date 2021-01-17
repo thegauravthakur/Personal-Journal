@@ -18,15 +18,7 @@ const ContactUsView = () => {
       >
         <Grid item style={{ minWidth: "100%" }}>
           <Button
-            // onClick={() => window.open("mailto:gthakur581@gmail.com", "_blank")}
-            onClick={() => {
-              navigator.serviceWorker.getRegistration().then(function (reg) {
-                reg.showNotification("Hello world!", {
-                  body: "hello wrold",
-                  badge: "/favicon-96x96.png",
-                });
-              });
-            }}
+            onClick={() => window.open("mailto:gthakur581@gmail.com", "_blank")}
             startIcon={<HiOutlineMail />}
             fullWidth
             variant="outlined"
@@ -36,17 +28,9 @@ const ContactUsView = () => {
         </Grid>
         <Grid item style={{ minWidth: "100%" }}>
           <Button
-            // onClick={() =>
-            //   window.open("https://twitter.com/gauravcodes", "_blank")
-            // }
-            onClick={() => {
-              navigator.serviceWorker.getRegistration().then(function (reg) {
-                reg.showNotification("Hello world!", {
-                  body: "hello wrold",
-                  badge: "/favicon-16x16.png",
-                });
-              });
-            }}
+            onClick={() =>
+              window.open("https://twitter.com/gauravcodes", "_blank")
+            }
             startIcon={<IoLogoTwitter />}
             fullWidth
             variant="outlined"
@@ -57,17 +41,9 @@ const ContactUsView = () => {
 
         <Grid item style={{ minWidth: "100%" }}>
           <Button
-            // onClick={() =>
-            //   window.open("https://linkedin.com/in/gauravcodes/", "_blank")
-            // }
-            onClick={() => {
-              navigator.serviceWorker.getRegistration().then(function (reg) {
-                reg.showNotification("Hello world!", {
-                  body: "hello wrold",
-                  badge: "/favicon-32x32.png",
-                });
-              });
-            }}
+            onClick={() =>
+              window.open("https://linkedin.com/in/gauravcodes/", "_blank")
+            }
             startIcon={<IoLogoLinkedin />}
             fullWidth
             variant="outlined"
