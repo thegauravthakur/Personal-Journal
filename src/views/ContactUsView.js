@@ -18,7 +18,15 @@ const ContactUsView = () => {
       >
         <Grid item style={{ minWidth: "100%" }}>
           <Button
-            onClick={() => window.open("mailto:gthakur581@gmail.com", "_blank")}
+            // onClick={() => window.open("mailto:gthakur581@gmail.com", "_blank")}
+            onClick={() => {
+              navigator.serviceWorker.getRegistration().then(function (reg) {
+                reg.showNotification("Hello world!", {
+                  body: "hello wrold",
+                  badge: "/favicon-96x96.png",
+                });
+              });
+            }}
             startIcon={<HiOutlineMail />}
             fullWidth
             variant="outlined"
@@ -28,9 +36,17 @@ const ContactUsView = () => {
         </Grid>
         <Grid item style={{ minWidth: "100%" }}>
           <Button
-            onClick={() =>
-              window.open("https://twitter.com/gauravcodes", "_blank")
-            }
+            // onClick={() =>
+            //   window.open("https://twitter.com/gauravcodes", "_blank")
+            // }
+            onClick={() => {
+              navigator.serviceWorker.getRegistration().then(function (reg) {
+                reg.showNotification("Hello world!", {
+                  body: "hello wrold",
+                  badge: "/favicon-16x16.png",
+                });
+              });
+            }}
             startIcon={<IoLogoTwitter />}
             fullWidth
             variant="outlined"
@@ -41,22 +57,17 @@ const ContactUsView = () => {
 
         <Grid item style={{ minWidth: "100%" }}>
           <Button
-            onClick={() =>
-              window.open("https://linkedin.com/in/gauravcodes/", "_blank")
-            }
-            // onClick={() => {
-            //   const timestamp = new Date().getTime() + 5 * 1000;
-            //   if ("showTrigger" in Notification.prototype) {
-            //     navigator.serviceWorker.getRegistration().then(function (reg) {
-            //       reg.showNotification("Hello world!", {
-            //         body: "hello wrold",
-            //         badge: "/favicon-32x32.png",
-            //         // eslint-disable-next-line no-undef
-            //         showTrigger: new TimestampTrigger(timestamp),
-            //       });
-            //     });
-            //   }
-            // }}
+            // onClick={() =>
+            //   window.open("https://linkedin.com/in/gauravcodes/", "_blank")
+            // }
+            onClick={() => {
+              navigator.serviceWorker.getRegistration().then(function (reg) {
+                reg.showNotification("Hello world!", {
+                  body: "hello wrold",
+                  badge: "/favicon-32x32.png",
+                });
+              });
+            }}
             startIcon={<IoLogoLinkedin />}
             fullWidth
             variant="outlined"

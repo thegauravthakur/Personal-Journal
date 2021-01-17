@@ -178,26 +178,6 @@ const TimelineToday = () => {
                         <Skeleton />
                       </>
                     )}
-                    {/*{!daySummary &&*/}
-                    {/*isDaySame(*/}
-                    {/*  new Date(),*/}
-                    {/*  new Date(*/}
-                    {/*    selectedDay.year,*/}
-                    {/*    selectedDay.month - 1,*/}
-                    {/*    selectedDay.year*/}
-                    {/*  )*/}
-                    {/*)*/}
-                    {/*  ? "So, How was your day? Click here to add your day summary."*/}
-                    {/*  : !isDaySame(*/}
-                    {/*      new Date(),*/}
-                    {/*      new Date(*/}
-                    {/*        selectedDay.year,*/}
-                    {/*        selectedDay.month - 1,*/}
-                    {/*        selectedDay.day*/}
-                    {/*      )*/}
-                    {/*    ) */}
-                    {/*  ? "Do you remember what happened on that day?"*/}
-                    {/*  : daySummary}*/}
                   </Typography>
                 </div>
                 <Divider style={{ marginBottom: 30 }} />

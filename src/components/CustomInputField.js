@@ -4,7 +4,7 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import "./CustomInputField.css";
 import CameraPicker from "./CameraPicker";
 import { AiOutlineClose } from "react-icons/ai";
-import { IconButton } from "@material-ui/core";
+import { IconButton, useMediaQuery } from "@material-ui/core";
 const CustomInputField = ({
   show,
   setShow,
@@ -15,6 +15,7 @@ const CustomInputField = ({
   file,
   setFile,
 }) => {
+  const matches = useMediaQuery("(min-width:600px)");
   return (
     <div
       className="outer-box"
@@ -33,7 +34,7 @@ const CustomInputField = ({
           }}
           className={"title"}
           style={{
-            fontSize: 18,
+            fontSize: matches ? 18 : 16,
             display: !show ? "none" : "block",
             fontWeight: "bolder",
           }}
