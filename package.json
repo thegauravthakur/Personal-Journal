@@ -2,9 +2,7 @@
   "name": "journal",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001",
   "dependencies": {
-    "@hassanmojab/react-modern-calendar-datepicker": "^3.1.7",
     "@material-ui/core": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "firebase": "^8.2.1",
@@ -13,6 +11,7 @@
     "react-icons": "^4.1.0",
     "react-image-file-resizer": "^0.3.9",
     "react-image-lightbox": "^5.1.1",
+    "react-modern-calendar-datepicker": "https://github.com/themudrec/react-modern-calendar-datepicker",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-textarea-autosize": "^8.3.0",

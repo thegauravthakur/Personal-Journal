@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import Timeline from "@material-ui/lab/Timeline";
+import React, { useContext, useEffect, useState } from 'react';
+import Timeline from '@material-ui/lab/Timeline';
 import {
   Button,
   CircularProgress,
@@ -9,25 +9,25 @@ import {
   ListItemText,
   Paper,
   Typography,
-} from "@material-ui/core";
-import CustomAppbar from "../components/CustomAppbar";
-import app from "../api/firebase";
-import { AuthContext } from "../context/Provider";
+} from '@material-ui/core';
+import CustomAppbar from '../components/CustomAppbar';
+import app from '../api/firebase';
+import { AuthContext } from '../context/Provider';
 import {
   checkIfDayIsGreater,
   formattedDate,
   isDaySame,
   validTime,
-} from "../utils/helperFunctions";
-import { Calendar } from "@hassanmojab/react-modern-calendar-datepicker";
-import "../styles/calendar.css";
-import AddNewItem from "../components/AddNewItem";
-import CustomTimelineItem from "../components/CustomTimelineItem";
-import CustomDrawer from "../components/CustomDrawer";
-import SimpleDialog from "../components/SimpleDialog";
-import "../components/TimelineToday.css";
-import DaySummaryDialog from "../components/DaySummryDialog";
-import { Skeleton } from "@material-ui/lab";
+} from '../utils/helperFunctions';
+import { Calendar } from 'react-modern-calendar-datepicker';
+import '../styles/calendar.css';
+import AddNewItem from '../components/AddNewItem';
+import CustomTimelineItem from '../components/CustomTimelineItem';
+import CustomDrawer from '../components/CustomDrawer';
+import SimpleDialog from '../components/SimpleDialog';
+import '../components/TimelineToday.css';
+import DaySummaryDialog from '../components/DaySummryDialog';
+import { Skeleton } from '@material-ui/lab';
 
 const TimelineToday = () => {
   const [daySummary, setDaySummary] = useState(null);
@@ -69,12 +69,12 @@ const TimelineToday = () => {
     ref.then((data) => {
       const temp = [];
       data.docs.forEach((d) => {
-        const fullDate = d["id"].split(":");
+        const fullDate = d['id'].split(':');
         temp.push({
           day: parseInt(fullDate[0]),
           month: parseInt(fullDate[1]),
           year: parseInt(fullDate[2]),
-          className: "custom-tile",
+          className: 'custom-tile',
         });
       });
       setDatesId(temp);
@@ -99,7 +99,7 @@ const TimelineToday = () => {
   }, [daySummary, selectedDay]);
 
   return (
-    <Paper className="wrapper">
+    <Paper className='wrapper'>
       <CustomAppbar
         setSelectedDay={setSelectedDay}
         setActiveDate={setActiveDate}
@@ -107,19 +107,19 @@ const TimelineToday = () => {
         datesId={datesId}
         setDrawer={setDrawer}
       />
-      <Grid container justify="space-evenly">
-        <Grid xs={11} sm={8} md={6} lg={4} item container direction="column">
+      <Grid container justify='space-evenly'>
+        <Grid xs={11} sm={8} md={6} lg={4} item container direction='column'>
           <Grid item>
             <Typography
               style={{
-                fontWeight: "bolder",
-                color: "#334155",
+                fontWeight: 'bolder',
+                color: '#334155',
                 marginTop: 30,
                 marginBottom: 15,
                 fontFamily: "'Segoe UI', serif",
               }}
-              className="header"
-              variant={"h4"}
+              className='header'
+              variant={'h4'}
             >
               {formattedDate(
                 new Date(
@@ -143,18 +143,18 @@ const TimelineToday = () => {
             ) ? (
               <Grid item>
                 <Divider />
-                <div className="daily-summary-wrapper">
+                <div className='daily-summary-wrapper'>
                   <Typography
                     style={{
                       paddingBottom: 15,
                       paddingTop: 15,
-                      minWidth: "100%",
-                      cursor: "pointer",
-                      color: "#78716C",
+                      minWidth: '100%',
+                      cursor: 'pointer',
+                      color: '#78716C',
                     }}
-                    component={"button"}
+                    component={'button'}
                     onClick={() => setSummaryDialog(true)}
-                    className="daily-summary-wrapper-text"
+                    className='daily-summary-wrapper-text'
                   >
                     {!summaryLoading ? (
                       daySummary ? (
@@ -167,9 +167,9 @@ const TimelineToday = () => {
                             selectedDay.day
                           )
                         ) ? (
-                        "So, How was your day? Click here to add your day summary."
+                        'So, How was your day? Click here to add your day summary.'
                       ) : (
-                        "Do you remember what happened on that day?"
+                        'Do you remember what happened on that day?'
                       )
                     ) : (
                       <>
@@ -185,7 +185,7 @@ const TimelineToday = () => {
             ) : null
           ) : null}
           <Grid item>
-            <Timeline align="left" style={{ padding: 0, margin: 0 }}>
+            <Timeline align='left' style={{ padding: 0, margin: 0 }}>
               {isDaySame(
                 new Date(),
                 new Date(
@@ -215,7 +215,7 @@ const TimelineToday = () => {
                 <CircularProgress />
               )}
               {list.length === 0 && !loading1 ? (
-                <Typography variant={"h6"}>Empty Here!</Typography>
+                <Typography variant={'h6'}>Empty Here!</Typography>
               ) : null}
             </Timeline>
           </Grid>
