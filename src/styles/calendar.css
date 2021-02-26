@@ -143,7 +143,6 @@
 .Calendar__monthArrowWrapper.-left {
     transform: rotate(90deg);
 }
-
 .Calendar.-rtl .Calendar__monthArrowWrapper.-left {
     transform: rotate(-90deg);
 }
@@ -151,7 +150,6 @@
 .Calendar__monthArrowWrapper.-right {
     transform: rotate(-90deg);
 }
-
 .Calendar.-rtl .Calendar__monthArrowWrapper.-right {
     transform: rotate(90deg);
 }
@@ -244,7 +242,6 @@
 .Calendar__monthText {
     margin-left: -0.3em;
 }
-
 .Calendar__yearText:last-child {
     margin-right: -0.3em;
 }
@@ -258,7 +255,6 @@
 .Calendar__monthText:hover {
     transform: translateX(-0.2em) scale(0.95);
 }
-
 .Calendar.-rtl .Calendar__monthText:hover {
     transform: translateX(0.2em) scale(0.95);
 }
@@ -266,7 +262,6 @@
 .Calendar__yearText:hover {
     transform: translateX(0.2em) scale(0.95);
 }
-
 .Calendar.-rtl .Calendar__yearText:hover {
     transform: translateX(-0.2em) scale(0.95);
 }
@@ -547,16 +542,11 @@
     height: 2.45em;
 }
 
-.Calendar__day:not(.-blank):not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween):not(.custom-tile):not(.-selected):hover {
+.Calendar__day:not(.-blank):not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween):not(.-selected):hover {
     background: #eaeaea;
     border-radius: 50%;
     color: var(--cl-color-black);
     border-color: transparent;
-}
-.Calendar__day.custom-tile:not(.-selected):hover {
-    border: 2px solid blue;
-    background: #eaeaea;
-    color: var(--cl-color-black);
 }
 
 .Calendar__day.-selected,
@@ -607,11 +597,9 @@
     background: transparent !important;
     cursor: default !important;
 }
-
 .Calendar__day.-selected {
     border-radius: 50%;
 }
-
 .Calendar__day.-today:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween) {
     font-weight: 600;
     color: var(--cl-color-black);
@@ -683,7 +671,9 @@
         transform: translateX(0);
     }
 }
+
 .custom-tile {
-    border: 2px solid blue;
+    font-weight: 900;
+    color: teal !important;
 }
 
