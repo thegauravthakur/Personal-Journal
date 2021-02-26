@@ -13,7 +13,7 @@ import ContactUsView from './views/ContactUsView';
 
 const App = () => {
   useEffect(() => {
-    const permission = Notification.permission;
+    const permission = Notification?.permission;
     if (permission !== 'granted') {
       Notification.requestPermission().then((result) => console.log(result));
     }
@@ -21,14 +21,14 @@ const App = () => {
 
   return (
     <Switch>
-      <Route exact path='/login' component={LoginScreen} />
-      <ProtectedRoute exact path='/settings' component={SettingsPage} />
-      <ProtectedRoute exact path='/edit-profile' component={EditProfile} />
-      <ProtectedRoute exact path='/starred' component={StarredView} />
-      <ProtectedRoute exact path={'/playground'} component={Playground} />
-      <ProtectedRoute exact path={'/changelog'} component={ChangelogView} />
-      <ProtectedRoute exact path={'/contact'} component={ContactUsView} />
-      <ProtectedRoute exact path={'/'} component={TimelineToday} />
+      <Route exact path='/login' component={LoginScreen}/>
+      <ProtectedRoute exact path='/settings' component={SettingsPage}/>
+      <ProtectedRoute exact path='/edit-profile' component={EditProfile}/>
+      <ProtectedRoute exact path='/starred' component={StarredView}/>
+      <ProtectedRoute exact path={'/playground'} component={Playground}/>
+      <ProtectedRoute exact path={'/changelog'} component={ChangelogView}/>
+      <ProtectedRoute exact path={'/contact'} component={ContactUsView}/>
+      <ProtectedRoute exact path={'/'} component={TimelineToday}/>
     </Switch>
   );
 };
